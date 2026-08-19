@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     })();
                 }
 
-                const baseUrl = 'https://zikfash.intitech.dev';
+                const baseUrl = 'https://app.zikfash.com';
                 const params = new URLSearchParams();
                 params.set('ref', 'tailor');
                 params.set('shop', shopName);
