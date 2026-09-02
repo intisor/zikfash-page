@@ -44,10 +44,25 @@ body {
 
 /* ─── Header ─────────────────────────────────────────── */
 .header {
-    padding: 30px 0;
-    position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    z-index: 100;
+    z-index: 1000;
+    padding: 22px 0;
+    background: rgba(250, 246, 240, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(184, 149, 90, 0.15);
+    box-shadow: 0 4px 20px rgba(26, 18, 8, 0.03);
+    transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.header.scrolled {
+    padding: 14px 0;
+    background: rgba(250, 246, 240, 0.96);
+    border-bottom-color: rgba(184, 149, 90, 0.25);
+    box-shadow: 0 6px 25px rgba(26, 18, 8, 0.07);
 }
 
 .header .container {
@@ -58,45 +73,63 @@ body {
 
 .logo {
     font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
+    font-size: 1.75rem;
     font-weight: 700;
     color: var(--espresso);
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     white-space: nowrap;
-    /* Prevent logo from breaking */
+    text-decoration: none;
+    transition: opacity 0.2s ease;
 }
 
-.logo .material-symbols-outlined {
-    font-size: 2rem;
-    color: var(--gold);
+.logo:hover {
+    opacity: 0.9;
 }
 
 .logo-img {
-    width: 2rem;
-    height: 2rem;
+    width: 2.1rem;
+    height: 2.1rem;
     object-fit: contain;
 }
 
 .nav {
     display: flex;
-    gap: 30px;
+    gap: 28px;
     align-items: center;
 }
 
 .nav a {
     text-decoration: none;
     color: var(--text-mid);
-    font-size: 0.9rem;
+    font-size: 0.84rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    transition: color 0.3s;
+    letter-spacing: 0.12em;
+    position: relative;
+    padding: 6px 0;
+    transition: color 0.3s ease;
 }
 
 .nav a:hover {
-    color: var(--gold);
+    color: var(--espresso);
+}
+
+.nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gold);
+    transition: width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    border-radius: 2px;
+}
+
+.nav a:hover::after {
+    width: 100%;
 }
 
 .nav-toggle,
@@ -104,12 +137,39 @@ body {
     display: none;
 }
 
+.nav a.btn-launch-header,
 .btn-launch-header {
     background: var(--espresso);
     color: var(--text-light) !important;
-    padding: 10px 20px;
-    border-radius: 6px;
+    padding: 11px 26px !important;
+    border-radius: 8px;
     font-size: 0.8rem !important;
+    font-weight: 700;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase;
+    border: 1px solid rgba(184, 149, 90, 0.35);
+    box-shadow: 0 4px 14px rgba(26, 18, 8, 0.12);
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    box-sizing: border-box;
+}
+
+.nav a.btn-launch-header:hover,
+.btn-launch-header:hover {
+    background: #000;
+    color: #fff !important;
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(184, 149, 90, 0.28);
+}
+
+.nav a.btn-launch-header::after,
+.btn-launch-header::after {
+    display: none !important;
 }
 
 /* ─── Hero ─────────────────────────────────────────── */
