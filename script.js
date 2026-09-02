@@ -203,6 +203,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     
 
+    // ── FAQ Mobile Accordion Logic ─────────────────────────────────────
+    const faqItems = document.querySelectorAll('.faq-item');
+    if (faqItems.length) {
+        faqItems.forEach(item => {
+            const btn = item.querySelector('.faq-question');
+            if (!btn) return;
+            btn.addEventListener('click', (e) => {
+                // Desktop is always fully open in a 2-column grid; only toggle on mobile
+                if (window.innerWidth > 768) return;
+                e.preventDefault();
+
+                const isCurrentlyOpen = item.classList.contains('open');
+                // Close other items on mobile by removing 'open' (NEVER touch 'active' which belongs to .reveal-up)
+                faqItems.forEach(other => {
+                    other.classList.remove('open');
+                    const otherBtn = other.querySelector('.faq-question');
+                    if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+                });
+                if (!isCurrentlyOpen) {
+                    item.classList.add('open');
+                    btn.setAttribute('aria-expanded', 'true');
+                }
+            });
+        });
+    }
+
     // Trigger the Z-logo transformation after the glide to top-left is done
     // Mobile: 5.5s animation + 2s delay + 0.5s buffer = 8s
     // Desktop: 7s animation + 2s delay + 0.5s buffer = 9.5s
