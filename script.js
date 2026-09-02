@@ -201,52 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // ── Native Carousel Sync Logic ───────────────
-    const setupCarouselSync = (gridSelector, navSelector) => {
-        const grid = document.querySelector(gridSelector);
-        const anchors = document.querySelectorAll(navSelector);
-        if (!grid || anchors.length === 0) return;
-
-        // Click pill to scroll to card
-        anchors.forEach((anchor, index) => {
-            anchor.addEventListener('click', () => {
-                const card = grid.children[index];
-                if (card) {
-                    const scrollLeft = card.offsetLeft - grid.offsetLeft;
-                    grid.scrollTo({ left: scrollLeft, behavior: 'smooth' });
-                }
-            });
-        });
-
-        // Scroll card to update active pill
-        grid.addEventListener('scroll', () => {
-            let activeIndex = 0;
-            let minDiff = Infinity;
-            
-            Array.from(grid.children).forEach((card, index) => {
-                const diff = Math.abs((card.offsetLeft - grid.offsetLeft) - grid.scrollLeft);
-                if (diff < minDiff) {
-                    minDiff = diff;
-                    activeIndex = index;
-                }
-            });
-
-            anchors.forEach((a, idx) => {
-                if (idx === activeIndex) {
-                    if (!a.classList.contains('active')) {
-                        a.classList.add('active');
-                        // Scroll pill container to keep active pill visible
-                        a.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-                    }
-                } else {
-                    a.classList.remove('active');
-                }
-            });
-        }, { passive: true });
-    };
-
-    setupCarouselSync('.feature-grid', '#features .carousel-anchor');
-    setupCarouselSync('.ai-grid', '.ai-carousel-nav .carousel-anchor');
+    
 
     // Trigger the Z-logo transformation after the glide to top-left is done
     // Mobile: 5.5s animation + 2s delay + 0.5s buffer = 8s
