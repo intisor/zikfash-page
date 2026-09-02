@@ -684,11 +684,28 @@
                         </div>
                     </div>
                     <div class="about-certificate-wrap">
+                        <div class="proof-switcher" role="tablist" aria-label="FUTA Award Proof Views">
+                            <button type="button" class="proof-tab-btn active" data-target="certificate-view" role="tab" aria-selected="true" aria-controls="certificate-view">
+                                <span class="material-symbols-outlined">workspace_premium</span> Certificate
+                            </button>
+                            <button type="button" class="proof-tab-btn" data-target="post-view" role="tab" aria-selected="false" aria-controls="post-view">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg> FUTA Post
+                            </button>
+                        </div>
+
                         <div class="certificate-frame">
-                            <img src="assets/futa-award-certificate.webp" alt="FUTA MTC 6.0 1st Position Award Certificate - ZikFash (Abdulawwal Intisor)" class="certificate-img" />
-                            <div class="certificate-caption">
-                                <span class="material-symbols-outlined">verified</span>
-                                <span>Official 1st Position Award &middot; FUTA Tech-PIC (June 2026)</span>
+                            <div id="certificate-view" class="proof-pane active" role="tabpanel">
+                                <img src="assets/futa-award-certificate.webp" alt="FUTA MTC 6.0 1st Position Award Certificate - ZikFash (Abdulawwal Intisor)" class="certificate-img" />
+                                <div class="certificate-caption">
+                                    <span class="material-symbols-outlined">verified</span>
+                                    <span>Official 1st Position Award &middot; FUTA Tech-PIC (June 2026)</span>
+                                </div>
+                            </div>
+
+                            <div id="post-view" class="proof-pane" role="tabpanel">
+                                <div class="fb-post-embed-container">
+                                    <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Ffutacommunity%2Fposts%2Fpfbid0A7rsqJ32NEEerH4oMZryMoTiwiMN3QQd3bMSbUrEtrKWV7ZTxEJo5PNn85KBtt5Hl&show_text=true&width=500" class="fb-post-iframe" width="500" height="720" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" loading="lazy" title="FUTA Community Facebook Post Announcement for ZikFash MTC 6.0 Win"></iframe>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -697,25 +714,62 @@
         </div>
     </section>
 
-<section id="pricing" class="pricing-section">
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing-section">
         <div class="container">
             <div class="pricing-wrap reveal-up">
                 <div class="pricing-text">
-                    <h2>The Main App is <span style="color: var(--gold);">100% Free.</span></h2>
-                    <p>Saving measurements, working without data, and sending WhatsApp receipts will always be completely free for you.</p>
+                    <h2>The Main App is <br><span style="color: var(--gold);">100% Free Forever.</span></h2>
+                    <p>Saving customer measurements, checking sizes without internet, and sending WhatsApp receipts will always be completely free.</p>
+                    
+                    <ul class="pricing-core-list">
+                        <li><span class="material-symbols-outlined">check_circle</span> Save unlimited customer names and measurements</li>
+                        <li><span class="material-symbols-outlined">check_circle</span> Tap body parts to pick sizes with slide tape (No typing)</li>
+                        <li><span class="material-symbols-outlined">check_circle</span> Works 100% without internet data</li>
+                        <li><span class="material-symbols-outlined">check_circle</span> Send instant WhatsApp receipts & track customer balances</li>
+                        <li><span class="material-symbols-outlined">check_circle</span> Free link for customers to check if their cloth is ready</li>
+                    </ul>
                 </div>
+                
                 <div class="pricing-card">
                     <div class="p-icon"><span class="material-symbols-outlined">toll</span></div>
-                    <h3>AI Coins</h3>
-                    <p>Special features (like showing fabric on styles or scanning handwritten books) use <strong>AI Coins</strong>.</p>
-                    <ul class="p-features">
-                        <li><span class="material-symbols-outlined">check_circle</span> Get 50 Free Coins when you sign up</li>
-                        <li><span class="material-symbols-outlined">check_circle</span> Buy more easily</li>
-                        <li><span class="material-symbols-outlined">check_circle</span> No monthly subscriptions. Buy only what you use.</li>
-                    </ul>
+                    <h3>Pay-As-You-Go AI Coins</h3>
+                    <p>Special features like seeing fabric on styles or scanning old paper books use <strong>AI Coins</strong>. Buy only when you need &mdash; no monthly fees.</p>
+                    
+                    <div class="coin-package-grid">
+                        <div class="coin-pkg">
+                            <span class="coin-pkg-label">Starter</span>
+                            <strong class="coin-pkg-price">₦500</strong>
+                            <span class="coin-pkg-qty">50 Coins</span>
+                        </div>
+                        <div class="coin-pkg">
+                            <span class="coin-pkg-label">Standard</span>
+                            <strong class="coin-pkg-price">₦1,000</strong>
+                            <span class="coin-pkg-qty">100 Coins</span>
+                        </div>
+                        <div class="coin-pkg popular">
+                            <span class="coin-pkg-badge">Popular</span>
+                            <span class="coin-pkg-label">Pro Studio</span>
+                            <strong class="coin-pkg-price">₦2,000</strong>
+                            <span class="coin-pkg-qty">220 Coins</span>
+                        </div>
+                        <div class="coin-pkg">
+                            <span class="coin-pkg-label">Master</span>
+                            <strong class="coin-pkg-price">₦5,000</strong>
+                            <span class="coin-pkg-qty">600 Coins</span>
+                        </div>
+                    </div>
+
+                    <div class="coin-welcome-banner">
+                        <span class="material-symbols-outlined">card_giftcard</span>
+                        <span><strong>50 Free Coins</strong> given to you immediately on signup!</span>
+                    </div>
+
+                    <a href="#onboardForm" class="btn-gold" style="width: 100%; text-align: center; display: block;" onclick="setTimeout(() => document.getElementById('shopNameInput').focus(), 400)">Claim 50 Free Coins</a>
                 </div>
             </div>
         </div>
+    </section>
 
 
     <!-- FAQ Section -->
@@ -828,9 +882,9 @@
     <section class="bottom-cta">
         <div class="container">
             <div class="cta-box reveal-up">
-                <h2>Ready to throw away your paper book?</h2>
-                <p>Join hundreds of professional tailors upgrading their craft with ZikFash.</p>
-                <a href="#onboardForm" class="btn-gold cta-btn" onclick="setTimeout(() => document.getElementById('shopNameInput').focus(), 500)">Get Started for Free</a>
+                <h2>Ready to stop losing measurements?</h2>
+                <p>Join hundreds of tailors saving time, cloth, and money with ZikFash.</p>
+                <a href="#onboardForm" class="btn-gold cta-btn" onclick="setTimeout(() => document.getElementById('shopNameInput').focus(), 500)">Start Free Today</a>
             </div>
         </div>
     </section>

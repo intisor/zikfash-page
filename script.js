@@ -53,7 +53,32 @@ document.addEventListener('DOMContentLoaded', () => {
         reveals.forEach(el => observer.observe(el));
     }
 
-    // Smooth hover effect for hero image
+    // ── Header Scroll Glass Effect ─────────────────────────────────────
+    const header = document.querySelector('.header');
+    if (header) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 30) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }, { passive: true });
+    }
+
+    // Auto-close mobile navigation drawer on link click
+    const navToggle = document.getElementById('nav-toggle');
+    const navLinks = document.querySelectorAll('.nav a');
+    if (navToggle && navLinks.length) {
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navToggle.checked) {
+                    navToggle.checked = false;
+                }
+            });
+        });
+    }
+
+    // Smooth hover effect for hero illustration
     const heroVisual = document.querySelector('.hero-visual');
     if (heroVisual) {
         heroVisual.addEventListener('mousemove', (e) => {
@@ -63,16 +88,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const x = (clientX - left) / width - 0.5;
             const y = (clientY - top) / height - 0.5;
 
-            const img = heroVisual.querySelector('img');
-            if (img) {
-                img.style.transform = `perspective(1000px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) scale(1.02)`;
+            const target = heroVisual.querySelector('.illustration-container') || heroVisual.querySelector('img');
+            if (target) {
+                target.style.transform = `perspective(1000px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg)`;
             }
         });
 
         heroVisual.addEventListener('mouseleave', () => {
-            const img = heroVisual.querySelector('img');
-            if (img) {
-                img.style.transform = `perspective(1000px) rotateY(0) rotateX(0) scale(1)`;
+            const target = heroVisual.querySelector('.illustration-container') || heroVisual.querySelector('img');
+            if (target) {
+                target.style.transform = `perspective(1000px) rotateY(0) rotateX(0)`;
             }
         });
     }
@@ -201,7 +226,140 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    
+    // ── Native Carousel Sync & Auto-Next Logic ─────────────────────────
+    const setupCarouselSync = (gridSelector, navSelector, autoIntervalMs = 4500) => {
+        const grid = document.querySelector(gridSelector);
+        const anchors = Array.from(document.querySelectorAll(navSelector));
+        if (!grid || anchors.length === 0) return;
+
+        const navContainer = anchors[0].closest('.features-carousel-nav, .ai-carousel-nav');
+        const cards = Array.from(grid.children);
+        let currentIndex = 0;
+        let isUserInteracting = false;
+        let resumeTimer = null;
+        let autoTimer = null;
+        let isVisibleOnScreen = false;
+
+        const scrollToCard = (index, smooth = true) => {
+            if (index < 0 || index >= cards.length) return;
+            currentIndex = index;
+            const card = cards[index];
+            if (card) {
+                const scrollLeft = card.offsetLeft - grid.offsetLeft;
+                grid.scrollTo({ left: scrollLeft, behavior: smooth ? 'smooth' : 'auto' });
+            }
+            updateActivePill(index);
+        };
+
+        const updateActivePill = (index) => {
+            anchors.forEach((a, idx) => {
+                if (idx === index) {
+                    if (!a.classList.contains('active')) {
+                        a.classList.add('active');
+                    }
+                    // Smoothly center active pill in its horizontal nav without scrolling the window
+                    if (navContainer) {
+                        const pillLeft = a.offsetLeft - navContainer.offsetLeft;
+                        const targetScroll = pillLeft - (navContainer.clientWidth / 2) + (a.clientWidth / 2);
+                        navContainer.scrollTo({ left: Math.max(0, targetScroll), behavior: 'smooth' });
+                    }
+                } else {
+                    a.classList.remove('active');
+                }
+            });
+        };
+
+        // Click pill to jump to card
+        anchors.forEach((anchor, index) => {
+            anchor.addEventListener('click', (e) => {
+                e.preventDefault();
+                pauseAutoPlay();
+                scrollToCard(index);
+                scheduleResume(7000);
+            });
+        });
+
+        // Track user scroll position to update active pill
+        let scrollRaf = null;
+        grid.addEventListener('scroll', () => {
+            if (scrollRaf) cancelAnimationFrame(scrollRaf);
+            scrollRaf = requestAnimationFrame(() => {
+                let activeIndex = 0;
+                let minDiff = Infinity;
+                
+                cards.forEach((card, index) => {
+                    const diff = Math.abs((card.offsetLeft - grid.offsetLeft) - grid.scrollLeft);
+                    if (diff < minDiff) {
+                        minDiff = diff;
+                        activeIndex = index;
+                    }
+                });
+
+                if (activeIndex !== currentIndex) {
+                    currentIndex = activeIndex;
+                    updateActivePill(activeIndex);
+                }
+            });
+        }, { passive: true });
+
+        // Auto-Next Rotation
+        const isCarouselMode = () => {
+            return grid.scrollWidth > grid.clientWidth + 15;
+        };
+
+        const nextSlide = () => {
+            if (isUserInteracting || !isVisibleOnScreen || !isCarouselMode()) return;
+            const nextIndex = (currentIndex + 1) % cards.length;
+            scrollToCard(nextIndex);
+        };
+
+        const startAutoPlay = () => {
+            if (autoTimer) clearInterval(autoTimer);
+            autoTimer = setInterval(nextSlide, autoIntervalMs);
+        };
+
+        const pauseAutoPlay = () => {
+            isUserInteracting = true;
+            if (resumeTimer) clearTimeout(resumeTimer);
+        };
+
+        const scheduleResume = (delay = 7000) => {
+            if (resumeTimer) clearTimeout(resumeTimer);
+            resumeTimer = setTimeout(() => {
+                isUserInteracting = false;
+            }, delay);
+        };
+
+        // Pause on touch/swipe/mouse drag
+        ['touchstart', 'mousedown', 'pointerdown'].forEach(evt => {
+            grid.addEventListener(evt, () => {
+                pauseAutoPlay();
+            }, { passive: true });
+        });
+
+        ['touchend', 'mouseup', 'pointerup', 'touchcancel'].forEach(evt => {
+            grid.addEventListener(evt, () => {
+                scheduleResume(7000);
+            }, { passive: true });
+        });
+
+        // IntersectionObserver: Only auto-play when section is visible in viewport
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    isVisibleOnScreen = entry.isIntersecting;
+                });
+            }, { threshold: 0.15 });
+            observer.observe(grid);
+        } else {
+            isVisibleOnScreen = true;
+        }
+
+        startAutoPlay();
+    };
+
+    setupCarouselSync('.feature-grid', '#features .carousel-anchor', 4500);
+    setupCarouselSync('.ai-grid', '.ai-carousel-nav .carousel-anchor', 4500);
 
     // ── FAQ Mobile Accordion Logic ─────────────────────────────────────
     const faqItems = document.querySelectorAll('.faq-item');
@@ -225,6 +383,28 @@ document.addEventListener('DOMContentLoaded', () => {
                     item.classList.add('open');
                     btn.setAttribute('aria-expanded', 'true');
                 }
+            });
+        });
+    }
+
+    // ── Proof Tab Switcher (Certificate vs Facebook Post) ───────────────
+    const proofTabs = document.querySelectorAll('.proof-tab-btn');
+    const proofPanes = document.querySelectorAll('.proof-pane');
+    if (proofTabs.length && proofPanes.length) {
+        proofTabs.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = btn.getAttribute('data-target');
+                proofTabs.forEach(t => {
+                    t.classList.remove('active');
+                    t.setAttribute('aria-selected', 'false');
+                });
+                proofPanes.forEach(pane => pane.classList.remove('active'));
+
+                btn.classList.add('active');
+                btn.setAttribute('aria-selected', 'true');
+                const targetPane = document.getElementById(targetId);
+                if (targetPane) targetPane.classList.add('active');
             });
         });
     }
