@@ -190,12 +190,98 @@
                                 <input type="tel" id="phoneInput" placeholder="Phone Number" aria-label="Phone Number" required autocomplete="tel" maxlength="20" />
                             </div>
                             <div class="select-wrap">
-                                <select id="currencySelect" required title="Currency" aria-label="Select Currency">
-                                    <option value="₦">₦</option>
-                                    <option value="$">$</option>
-                                    <option value="£">£</option>
-                                    <option value="Ksh">Ksh</option>
-                                    <option value="GH₵">GH₵</option>
+                                <select id="currencySelect" required title="Select Currency" aria-label="Select Currency">
+                                    <optgroup label="Popular & Global">
+                                        <option value="₦" data-code="NGN" data-countries="NG" title="Nigerian Naira (NGN)">₦ NGN</option>
+                                        <option value="$" data-code="USD" data-countries="US EC SV PA" title="US Dollar (USD)">$ USD</option>
+                                        <option value="£" data-code="GBP" data-countries="GB" title="British Pound (GBP)">£ GBP</option>
+                                        <option value="€" data-code="EUR" data-countries="FR DE IT ES NL BE AT PT GR FI IE SK SI EE LV LT CY MT LU" title="Euro (EUR)">€ EUR</option>
+                                        <option value="GH₵" data-code="GHS" data-countries="GH" title="Ghanaian Cedi (GHS)">GH₵ GHS</option>
+                                        <option value="Ksh" data-code="KES" data-countries="KE" title="Kenyan Shilling (KES)">Ksh KES</option>
+                                        <option value="FCA" data-code="XOF" data-countries="SN CI CM BJ TG ML BF NE GA CG CF TD GQ GW" title="CFA Franc (XOF/XAF)">FCA CFA</option>
+                                        <option value="R" data-code="ZAR" data-countries="ZA LS SZ" title="South African Rand (ZAR)">R ZAR</option>
+                                        <option value="AED" data-code="AED" data-countries="AE" title="UAE Dirham (AED)">AED</option>
+                                        <option value="SAR" data-code="SAR" data-countries="SA" title="Saudi Riyal (SAR)">SAR</option>
+                                        <option value="₹" data-code="INR" data-countries="IN BT" title="Indian Rupee (INR)">₹ INR</option>
+                                        <option value="CA$" data-code="CAD" data-countries="CA" title="Canadian Dollar (CAD)">CA$ CAD</option>
+                                        <option value="A$" data-code="AUD" data-countries="AU" title="Australian Dollar (AUD)">A$ AUD</option>
+                                    </optgroup>
+                                    <optgroup label="West & Central Africa">
+                                        <option value="Le" data-code="SLE" data-countries="SL" title="Sierra Leonean Leone (SLE)">Le SLE</option>
+                                        <option value="L$" data-code="LRD" data-countries="LR" title="Liberian Dollar (LRD)">L$ LRD</option>
+                                        <option value="D" data-code="GMD" data-countries="GM" title="Gambian Dalasi (GMD)">D GMD</option>
+                                        <option value="FG" data-code="GNF" data-countries="GN" title="Guinean Franc (GNF)">FG GNF</option>
+                                        <option value="FC" data-code="CDF" data-countries="CD" title="Congolese Franc (CDF)">FC CDF</option>
+                                        <option value="Kz" data-code="AOA" data-countries="AO" title="Angolan Kwanza (AOA)">Kz AOA</option>
+                                    </optgroup>
+                                    <optgroup label="East & Southern Africa">
+                                        <option value="TSh" data-code="TZS" data-countries="TZ" title="Tanzanian Shilling (TZS)">TSh TZS</option>
+                                        <option value="USh" data-code="UGX" data-countries="UG" title="Ugandan Shilling (UGX)">USh UGX</option>
+                                        <option value="RWF" data-code="RWF" data-countries="RW" title="Rwandan Franc (RWF)">RWF</option>
+                                        <option value="Br" data-code="ETB" data-countries="ET" title="Ethiopian Birr (ETB)">Br ETB</option>
+                                        <option value="ZMW" data-code="ZMW" data-countries="ZM" title="Zambian Kwacha (ZMW)">ZMW</option>
+                                        <option value="MT" data-code="MZN" data-countries="MZ" title="Mozambican Metical (MZN)">MT MZN</option>
+                                        <option value="P" data-code="BWP" data-countries="BW" title="Botswana Pula (BWP)">P BWP</option>
+                                        <option value="N$" data-code="NAD" data-countries="NA" title="Namibian Dollar (NAD)">N$ NAD</option>
+                                        <option value="₨" data-code="MUR" data-countries="MU" title="Mauritian Rupee (MUR)">₨ MUR</option>
+                                        <option value="MGA" data-code="MGA" data-countries="MG" title="Malagasy Ariary (MGA)">MGA</option>
+                                        <option value="MWK" data-code="MWK" data-countries="MW" title="Malawian Kwacha (MWK)">MWK</option>
+                                    </optgroup>
+                                    <optgroup label="North Africa & Middle East">
+                                        <option value="E£" data-code="EGP" data-countries="EG" title="Egyptian Pound (EGP)">E£ EGP</option>
+                                        <option value="MAD" data-code="MAD" data-countries="MA EH" title="Moroccan Dirham (MAD)">MAD</option>
+                                        <option value="DZD" data-code="DZD" data-countries="DZ" title="Algerian Dinar (DZD)">DZD</option>
+                                        <option value="TND" data-code="TND" data-countries="TN" title="Tunisian Dinar (TND)">TND</option>
+                                        <option value="QAR" data-code="QAR" data-countries="QA" title="Qatari Riyal (QAR)">QAR</option>
+                                        <option value="KWD" data-code="KWD" data-countries="KW" title="Kuwaiti Dinar (KWD)">KWD</option>
+                                        <option value="BHD" data-code="BHD" data-countries="BH" title="Bahraini Dinar (BHD)">BHD</option>
+                                        <option value="OMR" data-code="OMR" data-countries="OM" title="Omani Rial (OMR)">OMR</option>
+                                        <option value="JOD" data-code="JOD" data-countries="JO" title="Jordanian Dinar (JOD)">JOD</option>
+                                        <option value="₪" data-code="ILS" data-countries="IL PS" title="Israeli Shekel (ILS)">₪ ILS</option>
+                                        <option value="L£" data-code="LBP" data-countries="LB" title="Lebanese Pound (LBP)">L£ LBP</option>
+                                    </optgroup>
+                                    <optgroup label="Europe & United Kingdom">
+                                        <option value="CHF" data-code="CHF" data-countries="CH LI" title="Swiss Franc (CHF)">CHF</option>
+                                        <option value="kr" data-code="SEK" data-countries="SE" title="Swedish Krona (SEK)">kr SEK</option>
+                                        <option value="NOK" data-code="NOK" data-countries="NO" title="Norwegian Krone (NOK)">kr NOK</option>
+                                        <option value="DKK" data-code="DKK" data-countries="DK" title="Danish Krone (DKK)">kr DKK</option>
+                                        <option value="zł" data-code="PLN" data-countries="PL" title="Polish Zloty (PLN)">zł PLN</option>
+                                        <option value="₺" data-code="TRY" data-countries="TR" title="Turkish Lira (TRY)">₺ TRY</option>
+                                        <option value="Kč" data-code="CZK" data-countries="CZ" title="Czech Koruna (CZK)">Kč CZK</option>
+                                        <option value="Ft" data-code="HUF" data-countries="HU" title="Hungarian Forint (HUF)">Ft HUF</option>
+                                        <option value="lei" data-code="RON" data-countries="RO" title="Romanian Leu (RON)">lei RON</option>
+                                    </optgroup>
+                                    <optgroup label="Americas & Caribbean">
+                                        <option value="Mex$" data-code="MXN" data-countries="MX" title="Mexican Peso (MXN)">Mex$ MXN</option>
+                                        <option value="R$" data-code="BRL" data-countries="BR" title="Brazilian Real (BRL)">R$ BRL</option>
+                                        <option value="COL$" data-code="COP" data-countries="CO" title="Colombian Peso (COP)">COL$ COP</option>
+                                        <option value="ARS$" data-code="ARS" data-countries="AR" title="Argentine Peso (ARS)">ARS$ ARS</option>
+                                        <option value="CLP$" data-code="CLP" data-countries="CL" title="Chilean Peso (CLP)">CLP$ CLP</option>
+                                        <option value="S/" data-code="PEN" data-countries="PE" title="Peruvian Sol (PEN)">S/ PEN</option>
+                                        <option value="J$" data-code="JMD" data-countries="JM" title="Jamaican Dollar (JMD)">J$ JMD</option>
+                                        <option value="TT$" data-code="TTD" data-countries="TT" title="Trinidad & Tobago Dollar (TTD)">TT$ TTD</option>
+                                        <option value="Bds$" data-code="BBD" data-countries="BB" title="Barbadian Dollar (BBD)">Bds$ BBD</option>
+                                        <option value="G$" data-code="GYD" data-countries="GY" title="Guyanese Dollar (GYD)">G$ GYD</option>
+                                        <option value="B$" data-code="BSD" data-countries="BS" title="Bahamian Dollar (BSD)">B$ BSD</option>
+                                        <option value="RD$" data-code="DOP" data-countries="DO" title="Dominican Peso (DOP)">RD$ DOP</option>
+                                    </optgroup>
+                                    <optgroup label="Asia & Pacific">
+                                        <option value="Rs" data-code="PKR" data-countries="PK" title="Pakistani Rupee (PKR)">Rs PKR</option>
+                                        <option value="৳" data-code="BDT" data-countries="BD" title="Bangladeshi Taka (BDT)">৳ BDT</option>
+                                        <option value="LKR" data-code="LKR" data-countries="LK" title="Sri Lankan Rupee (LKR)">Rs LKR</option>
+                                        <option value="NPR" data-code="NPR" data-countries="NP" title="Nepalese Rupee (NPR)">Rs NPR</option>
+                                        <option value="₱" data-code="PHP" data-countries="PH" title="Philippine Peso (PHP)">₱ PHP</option>
+                                        <option value="Rp" data-code="IDR" data-countries="ID" title="Indonesian Rupee (IDR)">Rp IDR</option>
+                                        <option value="RM" data-code="MYR" data-countries="MY" title="Malaysian Ringgit (MYR)">RM MYR</option>
+                                        <option value="S$" data-code="SGD" data-countries="SG" title="Singapore Dollar (SGD)">S$ SGD</option>
+                                        <option value="NZ$" data-code="NZD" data-countries="NZ" title="New Zealand Dollar (NZD)">NZ$ NZD</option>
+                                        <option value="¥" data-code="JPY" data-countries="JP" title="Japanese Yen (JPY)">¥ JPY</option>
+                                        <option value="CN¥" data-code="CNY" data-countries="CN" title="Chinese Yuan (CNY)">¥ CNY</option>
+                                        <option value="HK$" data-code="HKD" data-countries="HK" title="Hong Kong Dollar (HKD)">HK$ HKD</option>
+                                        <option value="₩" data-code="KRW" data-countries="KR" title="South Korean Won (KRW)">₩ KRW</option>
+                                        <option value="฿" data-code="THB" data-countries="TH" title="Thai Baht (THB)">฿ THB</option>
+                                        <option value="₫" data-code="VND" data-countries="VN" title="Vietnamese Dong (VND)">₫ VND</option>
+                                    </optgroup>
                                 </select>
                             </div>
                             <button type="submit" class="btn-gold">Start Now</button>
