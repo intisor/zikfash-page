@@ -325,6 +325,22 @@ body {
     color: var(--text-mid);
     outline: none;
     cursor: pointer;
+    text-overflow: ellipsis;
+}
+
+.onboard-form select optgroup {
+    background: #fff;
+    color: var(--espresso);
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.onboard-form select option {
+    background: #fff;
+    color: var(--espresso);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 6px 10px;
 }
 
 .onboard-form .btn-gold {
@@ -344,7 +360,7 @@ body {
 
     .secondary-row {
         display: grid;
-        grid-template-columns: 1fr 65px;
+        grid-template-columns: 1fr 90px;
         gap: 12px;
         margin-top: 10px;
     }
@@ -1350,7 +1366,7 @@ body {
     }
 
     .secondary-row {
-        grid-template-columns: 1fr 65px !important;
+        grid-template-columns: 1fr 90px !important;
         gap: 0 !important;
         margin-top: 0 !important;
     }
