@@ -102,6 +102,258 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ── Smart Geotagging & Currency Detection (No Location Permission) ─
+    const currencySelect = document.getElementById('currencySelect');
+    if (currencySelect) {
+        let userManuallyChangedCurrency = false;
+
+        // Persist when user selects manually
+        currencySelect.addEventListener('change', () => {
+            userManuallyChangedCurrency = true;
+            try {
+                localStorage.setItem('zf_currency', currencySelect.value);
+            } catch (e) {}
+        });
+
+        // 1. Check if user already picked a preferred currency in a previous session
+        let hasRestoredPreference = false;
+        try {
+            const savedCurrency = localStorage.getItem('zf_currency');
+            if (savedCurrency && currencySelect.querySelector(`option[value="${savedCurrency}"]`)) {
+                currencySelect.value = savedCurrency;
+                hasRestoredPreference = true;
+                userManuallyChangedCurrency = true;
+            }
+        } catch (e) {}
+
+        // Helper: apply country code if matched to an option's data-countries
+        const applyCountry = (countryCode) => {
+            if (!countryCode || !currencySelect) return false;
+            countryCode = countryCode.toUpperCase().trim();
+            const option = currencySelect.querySelector(`option[data-countries~="${countryCode}"]`);
+            if (option) {
+                currencySelect.value = option.value;
+                return true;
+            }
+            return false;
+        };
+
+        // Comprehensive IANA Timezone to Country Code Mapping (Instant, 100% Offline, Zero Permission)
+        const getCountryFromTimezone = () => {
+            try {
+                const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                if (!tz) return null;
+
+                const tzMap = {
+                    // West & Central Africa
+                    'Africa/Lagos': 'NG',
+                    'Africa/Accra': 'GH',
+                    'Africa/Abidjan': 'CI',
+                    'Africa/Dakar': 'SN',
+                    'Africa/Douala': 'CM',
+                    'Africa/Bamako': 'ML',
+                    'Africa/Ouagadougou': 'BF',
+                    'Africa/Lome': 'TG',
+                    'Africa/Cotonou': 'BJ',
+                    'Africa/Niamey': 'NE',
+                    'Africa/Bissau': 'GW',
+                    'Africa/Libreville': 'GA',
+                    'Africa/Brazzaville': 'CG',
+                    'Africa/Bangui': 'CF',
+                    'Africa/Ndjamena': 'TD',
+                    'Africa/Malabo': 'GQ',
+                    'Africa/Freetown': 'SL',
+                    'Africa/Monrovia': 'LR',
+                    'Africa/Banjul': 'GM',
+                    'Africa/Conakry': 'GN',
+                    'Africa/Kinshasa': 'CD',
+                    'Africa/Lubumbashi': 'CD',
+                    'Africa/Luanda': 'AO',
+
+                    // East & Southern Africa
+                    'Africa/Nairobi': 'KE',
+                    'Africa/Dar_es_Salaam': 'TZ',
+                    'Africa/Kampala': 'UG',
+                    'Africa/Kigali': 'RW',
+                    'Africa/Addis_Ababa': 'ET',
+                    'Africa/Johannesburg': 'ZA',
+                    'Africa/Maseru': 'ZA',
+                    'Africa/Mbabane': 'ZA',
+                    'Africa/Gaborone': 'BW',
+                    'Africa/Windhoek': 'NA',
+                    'Africa/Lusaka': 'ZM',
+                    'Africa/Harare': 'US',
+                    'Africa/Maputo': 'MZ',
+                    'Indian/Mauritius': 'MU',
+                    'Indian/Antananarivo': 'MG',
+                    'Africa/Blantyre': 'MW',
+
+                    // North Africa & Middle East
+                    'Africa/Cairo': 'EG',
+                    'Africa/Casablanca': 'MA',
+                    'Africa/El_Aaiun': 'MA',
+                    'Africa/Algiers': 'DZ',
+                    'Africa/Tunis': 'TN',
+                    'Asia/Dubai': 'AE',
+                    'Asia/Riyadh': 'SA',
+                    'Asia/Qatar': 'QA',
+                    'Asia/Kuwait': 'KW',
+                    'Asia/Bahrain': 'BH',
+                    'Asia/Muscat': 'OM',
+                    'Asia/Amman': 'JO',
+                    'Asia/Jerusalem': 'IL',
+                    'Asia/Tel_Aviv': 'IL',
+                    'Asia/Beirut': 'LB',
+
+                    // Europe & UK
+                    'Europe/London': 'GB',
+                    'Europe/Belfast': 'GB',
+                    'Europe/Dublin': 'IE',
+                    'Europe/Paris': 'FR',
+                    'Europe/Berlin': 'DE',
+                    'Europe/Rome': 'IT',
+                    'Europe/Madrid': 'ES',
+                    'Europe/Amsterdam': 'NL',
+                    'Europe/Brussels': 'BE',
+                    'Europe/Vienna': 'AT',
+                    'Europe/Lisbon': 'PT',
+                    'Europe/Athens': 'GR',
+                    'Europe/Helsinki': 'FI',
+                    'Europe/Zurich': 'CH',
+                    'Europe/Stockholm': 'SE',
+                    'Europe/Oslo': 'NO',
+                    'Europe/Copenhagen': 'DK',
+                    'Europe/Warsaw': 'PL',
+                    'Europe/Istanbul': 'TR',
+                    'Europe/Prague': 'CZ',
+                    'Europe/Budapest': 'HU',
+                    'Europe/Bucharest': 'RO',
+
+                    // Americas & Caribbean
+                    'America/New_York': 'US',
+                    'America/Chicago': 'US',
+                    'America/Denver': 'US',
+                    'America/Los_Angeles': 'US',
+                    'America/Phoenix': 'US',
+                    'America/Detroit': 'US',
+                    'America/Anchorage': 'US',
+                    'Pacific/Honolulu': 'US',
+                    'America/Toronto': 'CA',
+                    'America/Vancouver': 'CA',
+                    'America/Montreal': 'CA',
+                    'America/Edmonton': 'CA',
+                    'America/Winnipeg': 'CA',
+                    'America/Halifax': 'CA',
+                    'America/St_Johns': 'CA',
+                    'America/Mexico_City': 'MX',
+                    'America/Cancun': 'MX',
+                    'America/Monterrey': 'MX',
+                    'America/Tijuana': 'MX',
+                    'America/Sao_Paulo': 'BR',
+                    'America/Fortaleza': 'BR',
+                    'America/Manaus': 'BR',
+                    'America/Recife': 'BR',
+                    'America/Bogota': 'CO',
+                    'America/Argentina/Buenos_Aires': 'AR',
+                    'America/Santiago': 'CL',
+                    'America/Lima': 'PE',
+                    'America/Jamaica': 'JM',
+                    'America/Port_of_Spain': 'TT',
+                    'America/Barbados': 'BB',
+                    'America/Guyana': 'GY',
+                    'America/Nassau': 'BS',
+                    'America/Santo_Domingo': 'DO',
+
+                    // Asia & Pacific
+                    'Asia/Kolkata': 'IN',
+                    'Asia/Calcutta': 'IN',
+                    'Asia/Karachi': 'PK',
+                    'Asia/Dhaka': 'BD',
+                    'Asia/Colombo': 'LK',
+                    'Asia/Kathmandu': 'NP',
+                    'Asia/Manila': 'PH',
+                    'Asia/Jakarta': 'ID',
+                    'Asia/Makassar': 'ID',
+                    'Asia/Jayapura': 'ID',
+                    'Asia/Kuala_Lumpur': 'MY',
+                    'Asia/Singapore': 'SG',
+                    'Australia/Sydney': 'AU',
+                    'Australia/Melbourne': 'AU',
+                    'Australia/Brisbane': 'AU',
+                    'Australia/Perth': 'AU',
+                    'Australia/Adelaide': 'AU',
+                    'Pacific/Auckland': 'NZ',
+                    'Asia/Tokyo': 'JP',
+                    'Asia/Shanghai': 'CN',
+                    'Asia/Hong_Kong': 'HK',
+                    'Asia/Seoul': 'KR',
+                    'Asia/Bangkok': 'TH',
+                    'Asia/Ho_Chi_Minh': 'VN'
+                };
+
+                if (tzMap[tz]) return tzMap[tz];
+
+                // Heuristic fallbacks by continent prefix
+                if (tz.startsWith('Africa/')) {
+                    const cfaCities = ['Abidjan', 'Dakar', 'Douala', 'Bamako', 'Ouagadougou', 'Lome', 'Cotonou', 'Niamey', 'Libreville', 'Brazzaville', 'Bangui', 'Ndjamena', 'Malabo'];
+                    if (cfaCities.some(c => tz.includes(c))) return 'SN';
+                    return null;
+                }
+                if (tz.startsWith('America/')) return 'US';
+                if (tz.startsWith('Europe/')) return 'FR';
+                if (tz.startsWith('Australia/')) return 'AU';
+            } catch (e) {}
+            return null;
+        };
+
+        // Browser language/locale tag (e.g. "en-GB", "fr-SN", "en-US")
+        const getCountryFromLocale = () => {
+            try {
+                const langs = navigator.languages || [navigator.language || ''];
+                for (const lang of langs) {
+                    if (!lang) continue;
+                    const parts = lang.split('-');
+                    if (parts.length > 1 && parts[1].length === 2) {
+                        return parts[1].toUpperCase();
+                    }
+                }
+            } catch (e) {}
+            return null;
+        };
+
+        // If no prior manual preference was found, run zero-permission detection
+        if (!hasRestoredPreference) {
+            let matched = false;
+            // A. Instant synchronous timezone detection (100% offline, 0ms latency)
+            const tzCountry = getCountryFromTimezone();
+            if (tzCountry) {
+                matched = applyCountry(tzCountry);
+            }
+            // B. Locale tag fallback
+            if (!matched) {
+                const locCountry = getCountryFromLocale();
+                if (locCountry) {
+                    matched = applyCountry(locCountry);
+                }
+            }
+
+            // C. Lightweight IP geotagging check (Zero location permission, silent fallback)
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 2000);
+                fetch('https://api.country.is/', { signal: controller.signal })
+                    .then(res => res.json())
+                    .then(data => {
+                        clearTimeout(timeoutId);
+                        if (data && data.country && !userManuallyChangedCurrency) {
+                            applyCountry(data.country);
+                        }
+                    })
+                    .catch(() => {});
+            } catch (e) {}
+        }
+    }
+
     // ── Onboarding Form Logic ──────────────────────────────────────────
     const onboardForm = document.getElementById('onboardForm');
     const phoneInput = document.getElementById('phoneInput');
