@@ -439,6 +439,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (shopName && phone && currency) {
+                try {
+                    sessionStorage.setItem('zf_signed_up', 'true');
+                } catch (e) {}
+                const waChatPrompt = document.getElementById('waChatPrompt');
+                if (waChatPrompt) waChatPrompt.classList.remove('active');
+
                 const btn = onboardForm.querySelector('.btn-gold');
                 if (btn) {
                     btn.innerText = "Starting...";
@@ -659,6 +665,106 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (targetPane) targetPane.classList.add('active');
             });
         });
+    }
+
+    // ── Floating WhatsApp Bot Assistant & Scroll Nudge Controller ──────
+    const waFloatingWidget = document.getElementById('waFloatingWidget');
+    const waChatPrompt = document.getElementById('waChatPrompt');
+    const waPromptClose = document.getElementById('waPromptClose');
+    const waFloatBtn = document.getElementById('waFloatBtn');
+
+    if (waFloatingWidget && waChatPrompt) {
+        let hasDisturbed = false;
+        let isPromptManuallyClosed = false;
+        let cumulativeScrollDistance = 0;
+        let lastScrollY = window.scrollY || 0;
+        let disturbTimer = null;
+
+        const isUserSignedUp = () => {
+            try {
+                return sessionStorage.getItem('zf_signed_up') === 'true';
+            } catch (e) {
+                return false;
+            }
+        };
+
+        const triggerNudge = () => {
+            if (isUserSignedUp() || isPromptManuallyClosed || waChatPrompt.classList.contains('active')) return;
+
+            waChatPrompt.classList.add('active');
+            waChatPrompt.setAttribute('aria-hidden', 'false');
+
+            // Trigger eye-catching disturbance wobble on both widget and card
+            waFloatingWidget.classList.add('disturb');
+            waChatPrompt.classList.add('disturb');
+            setTimeout(() => {
+                waFloatingWidget.classList.remove('disturb');
+                waChatPrompt.classList.remove('disturb');
+            }, 800);
+
+            hasDisturbed = true;
+        };
+
+        // Dismiss button handler
+        if (waPromptClose) {
+            waPromptClose.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                waChatPrompt.classList.remove('active');
+                waChatPrompt.setAttribute('aria-hidden', 'true');
+                isPromptManuallyClosed = true;
+                cumulativeScrollDistance = 0;
+            });
+        }
+
+        // Toggle prompt card if clicking on the floating button when card is closed
+        if (waFloatBtn) {
+            waFloatBtn.addEventListener('click', (e) => {
+                // If closed, open it and stop default navigate so visitor reads the message first on desktop/mobile
+                if (!waChatPrompt.classList.contains('active')) {
+                    e.preventDefault();
+                    isPromptManuallyClosed = false;
+                    triggerNudge();
+                }
+            });
+        }
+
+        // Trigger 1: Inactivity timer - browsing for 16 seconds without signing up
+        disturbTimer = setTimeout(() => {
+            if (!hasDisturbed && !isUserSignedUp()) {
+                triggerNudge();
+            }
+        }, 16000);
+
+        // Trigger 2: Excessive scrolling - scrolled past 850px (deep into features) or 2200px cumulative scroll
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            const currentY = window.scrollY || 0;
+            const scrollDelta = Math.abs(currentY - lastScrollY);
+            cumulativeScrollDistance += scrollDelta;
+            lastScrollY = currentY;
+
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    if (!isUserSignedUp()) {
+                        // Deep scroll past hero or cumulative exploration
+                        if (!hasDisturbed && (currentY > 850 || cumulativeScrollDistance > 2200)) {
+                            triggerNudge();
+                        } else if (isPromptManuallyClosed && cumulativeScrollDistance > 4500) {
+                            // If dismissed but user continues scrolling heavily without converting,
+                            // give a gentle shake on the floating button icon
+                            waFloatingWidget.classList.add('disturb');
+                            setTimeout(() => {
+                                waFloatingWidget.classList.remove('disturb');
+                            }, 800);
+                            cumulativeScrollDistance = 0;
+                        }
+                    }
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
     }
 
     // Trigger the Z-logo transformation after the glide to top-left is done

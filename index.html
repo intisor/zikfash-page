@@ -1041,6 +1041,46 @@
 
 
 
+    <!-- Floating WhatsApp Bot Assistant Widget -->
+    <div id="waFloatingWidget" class="wa-floating-widget" aria-live="polite">
+        <!-- Nudge / Chat Card -->
+        <div id="waChatPrompt" class="wa-chat-prompt" role="dialog" aria-labelledby="waBotTitle" aria-hidden="true">
+            <button id="waPromptClose" class="wa-prompt-close" aria-label="Close message">&times;</button>
+            <div class="wa-prompt-header">
+                <div class="wa-avatar-wrap">
+                    <img src="zeelogo.webp" alt="ZikFash" class="wa-bot-avatar" />
+                    <span class="wa-status-dot" title="Online"></span>
+                </div>
+                <div class="wa-header-info">
+                    <span id="waBotTitle" class="wa-bot-name">ZikFash on WhatsApp</span>
+                    <span class="wa-bot-status">🟢 Online &bull; Instant Replies</span>
+                </div>
+            </div>
+            <div class="wa-prompt-body">
+                <div class="wa-message-bubble">
+                    <p>👋 <strong>Have questions about ZikFash?</strong></p>
+                    <p>Chat directly with us on WhatsApp at <strong>+234 911 932 0371</strong> to learn more, ask questions, or see how it works!</p>
+                    <span class="wa-message-time">Just now</span>
+                </div>
+            </div>
+            <a id="waDirectBtn" href="https://wa.me/2349119320371?text=Hey%2C%20I%20want%20to%20learn%20more%20about%20ZikFash" target="_blank" rel="noopener noreferrer" class="wa-action-btn">
+                <svg class="wa-btn-svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                    <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.41a8.173 8.173 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.58c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.01-1.24-.74-.66-1.24-1.48-1.39-1.73-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.32-.02-.45-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29"/>
+                </svg>
+                <span>Chat on WhatsApp (+234 911 932 0371)</span>
+            </a>
+        </div>
+
+        <!-- Floating Action Button -->
+        <a id="waFloatBtn" href="https://wa.me/2349119320371?text=Hey%2C%20I%20want%20to%20learn%20more%20about%20ZikFash" target="_blank" rel="noopener noreferrer" class="wa-float-btn" aria-label="Chat with ZikFash on WhatsApp (+234 911 932 0371)">
+            <svg class="wa-float-svg" viewBox="0 0 24 24" width="34" height="34" fill="#ffffff">
+                <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.41a8.173 8.173 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.58c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.01-1.24-.74-.66-1.24-1.48-1.39-1.73-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.32-.02-.45-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29"/>
+            </svg>
+            <span class="wa-badge" id="waBadge">1</span>
+            <span class="wa-pulse-ring"></span>
+        </a>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="script.js"></script>
 </body>
