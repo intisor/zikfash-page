@@ -32,6 +32,114 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // ──────────────────────────────────────────────────────────────────
 
+    // ── UTM & Traffic Attribution Engine ──────────────────────────────
+    let zfAttribution = null;
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const utmSource = urlParams.get('utm_source');
+        const utmMedium = urlParams.get('utm_medium');
+        const utmCampaign = urlParams.get('utm_campaign');
+        const utmContent = urlParams.get('utm_content');
+        const utmTerm = urlParams.get('utm_term');
+        const gclid = urlParams.get('gclid');
+        const fbclid = urlParams.get('fbclid');
+        const ttclid = urlParams.get('ttclid');
+
+        let refHost = '';
+        if (document.referrer) {
+            try {
+                refHost = new URL(document.referrer).hostname.toLowerCase();
+            } catch (e) {}
+        }
+
+        let detectedSource = utmSource;
+        let detectedMedium = utmMedium;
+        let detectedCampaign = utmCampaign || '';
+        const clickId = gclid || fbclid || ttclid || null;
+
+        if (!detectedSource) {
+            if (ttclid) {
+                detectedSource = 'tiktok';
+                detectedMedium = 'cpc';
+            } else if (fbclid) {
+                detectedSource = 'facebook';
+                detectedMedium = 'cpc';
+            } else if (gclid) {
+                detectedSource = 'google';
+                detectedMedium = 'cpc';
+            } else if (refHost) {
+                if (refHost.includes('tiktok.com')) {
+                    detectedSource = 'tiktok';
+                    detectedMedium = 'social';
+                } else if (refHost.includes('instagram.com')) {
+                    detectedSource = 'instagram';
+                    detectedMedium = 'social';
+                } else if (refHost.includes('facebook.com') || refHost.includes('fb.com') || refHost.includes('messenger.com')) {
+                    detectedSource = 'facebook';
+                    detectedMedium = 'social';
+                } else if (refHost.includes('google.')) {
+                    detectedSource = 'google';
+                    detectedMedium = 'organic';
+                } else if (refHost.includes('x.com') || refHost.includes('t.co') || refHost.includes('twitter.com')) {
+                    detectedSource = 'twitter';
+                    detectedMedium = 'social';
+                } else if (refHost.includes('youtube.com')) {
+                    detectedSource = 'youtube';
+                    detectedMedium = 'video';
+                } else if (refHost.includes('linkedin.com')) {
+                    detectedSource = 'linkedin';
+                    detectedMedium = 'social';
+                } else if (refHost.includes('whatsapp') || refHost.includes('wa.me')) {
+                    detectedSource = 'whatsapp';
+                    detectedMedium = 'chat';
+                } else {
+                    detectedSource = refHost.replace(/^www\./, '');
+                    detectedMedium = 'referral';
+                }
+            } else {
+                detectedSource = 'direct';
+                detectedMedium = 'none';
+            }
+        }
+
+        if (!detectedMedium) {
+            detectedMedium = detectedSource === 'direct' ? 'none' : 'referral';
+        }
+
+        zfAttribution = {
+            utm_source: detectedSource,
+            utm_medium: detectedMedium,
+            utm_campaign: detectedCampaign,
+            utm_content: utmContent || '',
+            utm_term: utmTerm || '',
+            referrer: document.referrer || '',
+            referrer_domain: refHost,
+            click_id: clickId,
+            landing_path: window.location.pathname,
+            captured_at: new Date().toISOString()
+        };
+
+        // Persist first-touch attribution (never overwrite first touch)
+        if (!localStorage.getItem('zf_first_attribution')) {
+            localStorage.setItem('zf_first_attribution', JSON.stringify(zfAttribution));
+        }
+        // Always store last-touch attribution
+        localStorage.setItem('zf_last_attribution', JSON.stringify(zfAttribution));
+        window.zfAttribution = zfAttribution;
+
+        // Dispatch custom event and send to GA4
+        window.dispatchEvent(new CustomEvent('zf_attribution_ready', { detail: zfAttribution }));
+        if (typeof window.gtag === 'function') {
+            window.gtag('set', 'user_properties', {
+                traffic_source: zfAttribution.utm_source,
+                traffic_medium: zfAttribution.utm_medium,
+                traffic_campaign: zfAttribution.utm_campaign
+            });
+        }
+    } catch (e) {
+        console.warn('Attribution detection failed:', e);
+    }
+
     const observerOptions = {
         threshold: 0.1
     };
@@ -452,6 +560,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     btn.style.pointerEvents = 'none';
                 }
 
+                // Track Conversion in Google Analytics (GA4)
+                if (typeof window.gtag === 'function') {
+                    window.gtag('event', 'sign_up_initiated', {
+                        shop_name: shopName,
+                        currency: currency,
+                        traffic_source: zfAttribution ? zfAttribution.utm_source : 'direct',
+                        traffic_medium: zfAttribution ? zfAttribution.utm_medium : 'none',
+                        traffic_campaign: zfAttribution ? zfAttribution.utm_campaign : 'none'
+                    });
+                }
+
                 // Sync shop to CRM
                 if (supabaseClient) {
                     (async () => {
@@ -473,6 +592,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 params.set('phone', phone);
                 params.set('currency', currency);
                 params.set('session_id', sessionId); // Pass session ID to the App
+
+                // Forward Attribution & UTM Data to the App
+                if (zfAttribution) {
+                    if (zfAttribution.utm_source) params.set('utm_source', zfAttribution.utm_source);
+                    if (zfAttribution.utm_medium) params.set('utm_medium', zfAttribution.utm_medium);
+                    if (zfAttribution.utm_campaign) params.set('utm_campaign', zfAttribution.utm_campaign);
+                    if (zfAttribution.utm_content) params.set('utm_content', zfAttribution.utm_content);
+                    if (zfAttribution.utm_term) params.set('utm_term', zfAttribution.utm_term);
+                    if (zfAttribution.referrer_domain) params.set('ref_domain', zfAttribution.referrer_domain);
+                    if (zfAttribution.click_id) params.set('click_id', zfAttribution.click_id);
+                }
                 
                 setTimeout(() => {
                     window.location.href = `${baseUrl}?${params.toString()}`;
@@ -674,6 +804,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const waFloatBtn = document.getElementById('waFloatBtn');
 
     if (waFloatingWidget && waChatPrompt) {
+        const waDirectBtn = document.getElementById('waDirectBtn');
+
+        // Personalize WhatsApp link prefill with acquisition source (e.g. from TikTok, from Instagram)
+        if (zfAttribution && zfAttribution.utm_source && zfAttribution.utm_source !== 'direct') {
+            const rawSource = zfAttribution.utm_source;
+            const sourceDisplay = rawSource.charAt(0).toUpperCase() + rawSource.slice(1);
+            const defaultMsg = 'Hey, I want to learn more about ZikFash';
+            const attributedMsg = `${defaultMsg} (from ${sourceDisplay})`;
+            const newWaHref = `https://wa.me/2349119320371?text=${encodeURIComponent(attributedMsg)}`;
+
+            if (waDirectBtn) waDirectBtn.href = newWaHref;
+            if (waFloatBtn) waFloatBtn.href = newWaHref;
+        }
+
+        // Track WhatsApp CTA click conversions in GA4
+        const trackWaLead = () => {
+            if (typeof window.gtag === 'function') {
+                window.gtag('event', 'whatsapp_lead_click', {
+                    traffic_source: zfAttribution ? zfAttribution.utm_source : 'direct',
+                    traffic_medium: zfAttribution ? zfAttribution.utm_medium : 'none',
+                    traffic_campaign: zfAttribution ? zfAttribution.utm_campaign : 'none'
+                });
+            }
+        };
+        if (waDirectBtn) waDirectBtn.addEventListener('click', trackWaLead);
+        if (waFloatBtn) waFloatBtn.addEventListener('click', trackWaLead);
+
         let hasDisturbed = false;
         let isPromptManuallyClosed = false;
         let cumulativeScrollDistance = 0;
