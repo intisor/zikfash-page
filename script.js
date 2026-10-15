@@ -1225,6 +1225,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let cumulativeScrollDistance = 0;
         let lastScrollY = window.scrollY || 0;
         let disturbTimer = null;
+        let isVisitorOnInput = false;
 
         const isUserSignedUp = () => {
             try {
@@ -1234,8 +1235,73 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
+        const isTextInputElement = (el) => {
+            if (!el) return false;
+            const tag = (el.tagName || '').toLowerCase();
+            if (tag === 'textarea' || el.isContentEditable) return true;
+            if (tag === 'input') {
+                const type = (el.type || 'text').toLowerCase();
+                return !['checkbox', 'radio', 'button', 'submit', 'reset', 'hidden', 'image'].includes(type);
+            }
+            return false;
+        };
+
+        const isAnyTextInputFocused = () => {
+            const active = document.activeElement;
+            return isTextInputElement(active);
+        };
+
+        const hidePromptIfActive = () => {
+            if (waChatPrompt.classList.contains('active')) {
+                waChatPrompt.classList.remove('active');
+                waChatPrompt.setAttribute('aria-hidden', 'true');
+            }
+            waFloatingWidget.classList.remove('disturb');
+            waChatPrompt.classList.remove('disturb');
+        };
+
+        // Suppress prompt when visitor enters/focuses on any input field
+        document.addEventListener('focusin', (e) => {
+            if (isTextInputElement(e.target)) {
+                isVisitorOnInput = true;
+                document.body.classList.add('has-focused-input');
+                waFloatingWidget.classList.add('input-focused');
+                hidePromptIfActive();
+            }
+        }, true);
+
+        // Track when visitor leaves input field
+        document.addEventListener('focusout', (e) => {
+            if (isTextInputElement(e.target)) {
+                setTimeout(() => {
+                    if (!isAnyTextInputFocused()) {
+                        isVisitorOnInput = false;
+                        document.body.classList.remove('has-focused-input');
+                        waFloatingWidget.classList.remove('input-focused');
+                    }
+                }, 200);
+            }
+        }, true);
+
+        // Extra safety: typing in any input field immediately hides prompt
+        document.addEventListener('input', (e) => {
+            if (isTextInputElement(e.target)) {
+                hidePromptIfActive();
+            }
+        }, { passive: true });
+
+        // Tapping or clicking inside the hero onboarding form immediately hides prompt
+        if (onboardForm) {
+            onboardForm.addEventListener('click', () => {
+                hidePromptIfActive();
+            });
+            onboardForm.addEventListener('focusin', () => {
+                hidePromptIfActive();
+            });
+        }
+
         const triggerNudge = () => {
-            if (isUserSignedUp() || isPromptManuallyClosed || waChatPrompt.classList.contains('active')) return;
+            if (isUserSignedUp() || isPromptManuallyClosed || isVisitorOnInput || isAnyTextInputFocused() || waChatPrompt.classList.contains('active')) return;
 
             waChatPrompt.classList.add('active');
             waChatPrompt.setAttribute('aria-hidden', 'false');
@@ -1268,6 +1334,12 @@ document.addEventListener('DOMContentLoaded', () => {
             waFloatBtn.addEventListener('click', (e) => {
                 // If closed, open it and stop default navigate so visitor reads the message first on desktop/mobile
                 if (!waChatPrompt.classList.contains('active')) {
+                    if (isAnyTextInputFocused() && document.activeElement) {
+                        document.activeElement.blur();
+                    }
+                    isVisitorOnInput = false;
+                    document.body.classList.remove('has-focused-input');
+                    waFloatingWidget.classList.remove('input-focused');
                     e.preventDefault();
                     isPromptManuallyClosed = false;
                     triggerNudge();
@@ -1277,7 +1349,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Trigger 1: Inactivity timer - browsing for 16 seconds without signing up
         disturbTimer = setTimeout(() => {
-            if (!hasDisturbed && !isUserSignedUp()) {
+            if (!hasDisturbed && !isUserSignedUp() && !isVisitorOnInput && !isAnyTextInputFocused()) {
                 triggerNudge();
             }
         }, 16000);
@@ -1294,9 +1366,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.requestAnimationFrame(() => {
                     if (!isUserSignedUp()) {
                         // Deep scroll past hero or cumulative exploration
-                        if (!hasDisturbed && (currentY > 850 || cumulativeScrollDistance > 2200)) {
+                        if (!hasDisturbed && !isVisitorOnInput && !isAnyTextInputFocused() && (currentY > 850 || cumulativeScrollDistance > 2200)) {
                             triggerNudge();
-                        } else if (isPromptManuallyClosed && cumulativeScrollDistance > 4500) {
+                        } else if (isPromptManuallyClosed && cumulativeScrollDistance > 4500 && !isVisitorOnInput && !isAnyTextInputFocused()) {
                             // If dismissed but user continues scrolling heavily without converting,
                             // give a gentle shake on the floating button icon
                             waFloatingWidget.classList.add('disturb');

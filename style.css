@@ -3394,6 +3394,16 @@ img, picture, video, canvas, svg {
     }
 }
 
+/* Suppress WhatsApp prompt card when visitor is on an input field */
+body.has-focused-input .wa-chat-prompt,
+.wa-floating-widget.input-focused .wa-chat-prompt {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translateY(16px) scale(0.95) !important;
+    transition: opacity 0.2s ease, transform 0.2s ease !important;
+}
+
 /* ─────────────────────────────────────────────────────────────
    Google Analytics / Stripe Style Searchable Currency Picker
    ───────────────────────────────────────────────────────────── */
