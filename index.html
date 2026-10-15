@@ -198,8 +198,13 @@
                                 <span class="material-symbols-outlined icon-faint">call</span>
                                 <input type="tel" id="phoneInput" placeholder="Phone Number" aria-label="Phone Number" required autocomplete="tel" maxlength="20" />
                             </div>
-                            <div class="select-wrap">
-                                <select id="currencySelect" required title="Select Currency" aria-label="Select Currency">
+                            <div class="select-wrap" id="currencySelectWrap">
+                                <button type="button" id="currencyTrigger" class="currency-trigger-btn" aria-haspopup="dialog" aria-expanded="false" aria-controls="currencyModal" aria-label="Select Currency">
+                                    <span class="curr-trigger-symbol" id="currTriggerSymbol">₦</span>
+                                    <span class="curr-trigger-code" id="currTriggerCode">NGN</span>
+                                    <span class="material-symbols-outlined curr-trigger-chevron">expand_more</span>
+                                </button>
+                                <select id="currencySelect" required title="Select Currency" aria-label="Select Currency" class="visually-hidden" tabindex="-1">
                                     <optgroup label="Popular & Global">
                                         <option value="₦" data-code="NGN" data-countries="NG" title="Nigerian Naira (NGN)">₦ NGN</option>
                                         <option value="$" data-code="USD" data-countries="US EC SV PA" title="US Dollar (USD)">$ USD</option>
@@ -1089,6 +1094,53 @@
             <span class="wa-badge" id="waBadge">1</span>
             <span class="wa-pulse-ring"></span>
         </a>
+    </div>
+
+    <!-- Searchable Currency Modal (Google Analytics / Stripe Style) -->
+    <div id="currencyModal" class="zf-curr-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="currModalTitle">
+        <div class="zf-curr-backdrop" id="currModalBackdrop"></div>
+        <div class="zf-curr-sheet">
+            <div class="zf-curr-handle" aria-hidden="true"></div>
+            <div class="zf-curr-header">
+                <div class="zf-curr-header-title">
+                    <span class="material-symbols-outlined zf-curr-header-icon">payments</span>
+                    <div>
+                        <h3 id="currModalTitle">Select Currency</h3>
+                        <p class="zf-curr-subtext">Used for measurement receipts, order pricing &amp; invoices</p>
+                    </div>
+                </div>
+                <button type="button" class="zf-curr-close-btn" id="currModalClose" aria-label="Close currency picker">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+
+            <div class="zf-curr-search-box">
+                <span class="material-symbols-outlined zf-curr-search-icon">search</span>
+                <input type="text" id="currencySearchInput" placeholder="Search currency or country (e.g. Nigeria, USD, Pound)..." autocomplete="off" spellcheck="false" aria-label="Search currency or country" />
+                <button type="button" class="zf-curr-search-clear" id="currSearchClear" aria-label="Clear search" style="display: none;">
+                    <span class="material-symbols-outlined">cancel</span>
+                </button>
+            </div>
+
+            <div class="zf-curr-filter-chips" id="currFilterChips">
+                <button type="button" class="curr-chip active" data-filter="all">All</button>
+                <button type="button" class="curr-chip" data-filter="popular">Popular &amp; Africa</button>
+                <button type="button" class="curr-chip" data-filter="global">Global</button>
+                <button type="button" class="curr-chip" data-filter="europe">Europe &amp; UK</button>
+                <button type="button" class="curr-chip" data-filter="americas">Americas</button>
+                <button type="button" class="curr-chip" data-filter="asia">Asia</button>
+            </div>
+
+            <div class="zf-curr-list" id="currencyOptionsList" role="listbox" aria-label="Available currencies">
+                <!-- Populated dynamically from #currencySelect with rich country metadata -->
+            </div>
+
+            <div class="zf-curr-empty" id="currencyEmptyState" style="display: none;">
+                <span class="material-symbols-outlined zf-curr-empty-icon">search_off</span>
+                <p>No currencies found matching "<span id="currEmptyQuery"></span>"</p>
+                <button type="button" class="btn-text-gold" id="currResetSearch">Clear search</button>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

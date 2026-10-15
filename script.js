@@ -241,6 +241,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const option = currencySelect.querySelector(`option[data-countries~="${countryCode}"]`);
             if (option) {
                 currencySelect.value = option.value;
+                if (typeof updateCurrencyTriggerUI === 'function') {
+                    updateCurrencyTriggerUI();
+                }
                 return true;
             }
             return false;
@@ -461,6 +464,392 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (e) {}
         }
     }
+
+    // ── Google Analytics / Stripe Style Searchable Currency Picker ─────────
+    const countryAliases = {
+        'NG': 'Nigeria Lagos Abuja Kano Ibadan Port Harcourt',
+        'GH': 'Ghana Accra Kumasi Cedi',
+        'KE': 'Kenya Nairobi Mombasa Shilling',
+        'US': 'United States USA America Dollar',
+        'GB': 'United Kingdom UK Great Britain England London British Pound',
+        'FR': 'France Paris Euro',
+        'DE': 'Germany Berlin Euro',
+        'IT': 'Italy Rome Euro',
+        'ES': 'Spain Madrid Euro',
+        'NL': 'Netherlands Amsterdam Euro',
+        'SN': 'Senegal Dakar CFA Franc',
+        'CI': 'Ivory Coast Cote d\'Ivoire Abidjan CFA Franc',
+        'CM': 'Cameroon Douala Yaounde CFA Franc',
+        'BJ': 'Benin Cotonou CFA Franc',
+        'TG': 'Togo Lome CFA Franc',
+        'ML': 'Mali Bamako CFA Franc',
+        'BF': 'Burkina Faso Ouagadougou CFA Franc',
+        'NE': 'Niger Niamey CFA Franc',
+        'GA': 'Gabon Libreville CFA Franc',
+        'CG': 'Congo Brazzaville CFA Franc',
+        'ZA': 'South Africa Johannesburg Cape Town Durban Rand',
+        'AE': 'United Arab Emirates UAE Dubai Abu Dhabi Dirham',
+        'SA': 'Saudi Arabia Riyadh Jeddah Dirham Riyal',
+        'IN': 'India Delhi Mumbai Bangalore Rupee',
+        'CA': 'Canada Toronto Vancouver Montreal Canadian Dollar',
+        'AU': 'Australia Sydney Melbourne Australian Dollar',
+        'SL': 'Sierra Leone Freetown Leone',
+        'LR': 'Liberia Monrovia Liberian Dollar',
+        'GM': 'Gambia Banjul Dalasi',
+        'GN': 'Guinea Conakry Franc',
+        'CD': 'Democratic Republic of Congo Kinshasa Congolese Franc',
+        'AO': 'Angola Luanda Kwanza',
+        'TZ': 'Tanzania Dar es Salaam Zanzibar Shilling',
+        'UG': 'Uganda Kampala Shilling',
+        'RW': 'Rwanda Kigali Franc',
+        'ET': 'Ethiopia Addis Ababa Birr',
+        'ZM': 'Zambia Lusaka Kwacha',
+        'MZ': 'Mozambique Maputo Metical',
+        'BW': 'Botswana Gaborone Pula',
+        'NA': 'Namibia Windhoek Dollar',
+        'MU': 'Mauritius Port Louis Rupee',
+        'MG': 'Madagascar Antananarivo Ariary',
+        'MW': 'Malawi Lilongwe Kwacha',
+        'EG': 'Egypt Cairo Alexandria Egyptian Pound',
+        'MA': 'Morocco Casablanca Rabat Dirham',
+        'DZ': 'Algeria Algiers Dinar',
+        'TN': 'Tunisia Tunis Dinar',
+        'QA': 'Qatar Doha Riyal',
+        'KW': 'Kuwait Kuwait City Dinar',
+        'BH': 'Bahrain Manama Dinar',
+        'OM': 'Oman Muscat Rial',
+        'JO': 'Jordan Amman Dinar',
+        'IL': 'Israel Tel Aviv Jerusalem Shekel',
+        'LB': 'Lebanon Beirut Pound',
+        'CH': 'Switzerland Zurich Geneva Swiss Franc',
+        'SE': 'Sweden Stockholm Krona',
+        'NO': 'Norway Oslo Krone',
+        'DK': 'Denmark Copenhagen Krone',
+        'PL': 'Poland Warsaw Zloty',
+        'TR': 'Turkey Istanbul Ankara Lira',
+        'CZ': 'Czech Republic Prague Koruna',
+        'HU': 'Hungary Budapest Forint',
+        'RO': 'Romania Bucharest Leu',
+        'MX': 'Mexico Mexico City Peso',
+        'BR': 'Brazil Sao Paulo Rio Real',
+        'CO': 'Colombia Bogota Peso',
+        'AR': 'Argentina Buenos Aires Peso',
+        'CL': 'Chile Santiago Peso',
+        'PE': 'Peru Lima Sol',
+        'JM': 'Jamaica Kingston Jamaican Dollar',
+        'TT': 'Trinidad and Tobago Port of Spain Dollar',
+        'BB': 'Barbados Bridgetown Dollar',
+        'GY': 'Guyana Georgetown Dollar',
+        'BS': 'Bahamas Nassau Dollar',
+        'DO': 'Dominican Republic Santo Domingo Peso',
+        'PK': 'Pakistan Karachi Lahore Islamabad Rupee',
+        'BD': 'Bangladesh Dhaka Taka',
+        'LK': 'Sri Lanka Colombo Rupee',
+        'NP': 'Nepal Kathmandu Rupee',
+        'PH': 'Philippines Manila Peso',
+        'ID': 'Indonesia Jakarta Rupiah',
+        'MY': 'Malaysia Kuala Lumpur Ringgit',
+        'SG': 'Singapore Dollar',
+        'NZ': 'New Zealand Auckland Wellington Dollar',
+        'JP': 'Japan Tokyo Yen',
+        'CN': 'China Beijing Shanghai Guangzhou Yuan',
+        'HK': 'Hong Kong Dollar',
+        'KR': 'South Korea Seoul Won',
+        'TH': 'Thailand Bangkok Baht',
+        'VN': 'Vietnam Ho Chi Minh City Hanoi Dong'
+    };
+
+    function updateCurrencyTriggerUI() {
+        const select = document.getElementById('currencySelect');
+        const triggerSymbol = document.getElementById('currTriggerSymbol');
+        const triggerCode = document.getElementById('currTriggerCode');
+        const list = document.getElementById('currencyOptionsList');
+        if (!select || !triggerSymbol || !triggerCode) return;
+
+        const selectedOption = select.options[select.selectedIndex] || select.options[0];
+        if (!selectedOption) return;
+
+        const val = selectedOption.value;
+        const code = selectedOption.getAttribute('data-code') || '';
+
+        triggerSymbol.textContent = val;
+        triggerCode.textContent = code;
+
+        if (list) {
+            const allItems = list.querySelectorAll('.zf-curr-item');
+            allItems.forEach(item => {
+                const isMatch = item.getAttribute('data-code') === code && item.getAttribute('data-value') === val;
+                item.classList.toggle('is-selected', isMatch);
+                item.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+            });
+        }
+    }
+
+    function initSearchableCurrencyPicker() {
+        const select = document.getElementById('currencySelect');
+        const trigger = document.getElementById('currencyTrigger');
+        const triggerWrap = document.getElementById('currencySelectWrap');
+        const modal = document.getElementById('currencyModal');
+        const backdrop = document.getElementById('currModalBackdrop');
+        const closeBtn = document.getElementById('currModalClose');
+        const searchInput = document.getElementById('currencySearchInput');
+        const searchClear = document.getElementById('currSearchClear');
+        const resetBtn = document.getElementById('currResetSearch');
+        const listContainer = document.getElementById('currencyOptionsList');
+        const emptyState = document.getElementById('currencyEmptyState');
+        const emptyQuery = document.getElementById('currEmptyQuery');
+        const chips = document.querySelectorAll('#currFilterChips .curr-chip');
+
+        if (!select || !trigger || !modal || !listContainer) return;
+
+        // Build list dynamically from <select> options to stay 100% in sync
+        listContainer.innerHTML = '';
+        const optgroups = select.querySelectorAll('optgroup');
+
+        optgroups.forEach((group) => {
+            const groupTitle = document.createElement('div');
+            groupTitle.className = 'zf-curr-group-title';
+            groupTitle.textContent = group.label;
+            groupTitle.dataset.group = group.label.toLowerCase();
+            listContainer.appendChild(groupTitle);
+
+            const options = group.querySelectorAll('option');
+            options.forEach(opt => {
+                const val = opt.value;
+                const code = opt.getAttribute('data-code') || '';
+                const countries = opt.getAttribute('data-countries') || '';
+                const fullTitle = opt.getAttribute('title') || opt.textContent;
+
+                // Extract clean currency name
+                const cleanName = fullTitle.replace(/\s*\([^)]*\)/g, '').trim();
+
+                // Country subtext
+                let subtext = `${code}`;
+                const primaryCountryCode = countries.split(' ')[0];
+                if (primaryCountryCode && countryAliases[primaryCountryCode]) {
+                    const countryName = countryAliases[primaryCountryCode].split(' ')[0];
+                    subtext += ` · ${countryName}`;
+                }
+
+                // Search keywords index
+                const aliasWords = countries.split(' ').map(c => countryAliases[c] || '').join(' ');
+                const keywords = `${val} ${code} ${cleanName} ${fullTitle} ${countries} ${aliasWords}`.toLowerCase();
+
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'zf-curr-item';
+                btn.role = 'option';
+                btn.dataset.value = val;
+                btn.dataset.code = code;
+                btn.dataset.keywords = keywords;
+                btn.dataset.group = group.label.toLowerCase();
+                btn.setAttribute('aria-selected', opt.selected ? 'true' : 'false');
+                if (opt.selected) {
+                    btn.classList.add('is-selected');
+                }
+
+                btn.innerHTML = `
+                    <div class="zf-curr-item-left">
+                        <span class="zf-curr-badge">${val}</span>
+                        <div class="zf-curr-info">
+                            <span class="zf-curr-name">${cleanName}</span>
+                            <span class="zf-curr-sub">${subtext}</span>
+                        </div>
+                    </div>
+                    <div class="zf-curr-item-right">
+                        <span class="zf-curr-code-tag">${code}</span>
+                        <span class="material-symbols-outlined zf-curr-check-icon">check</span>
+                    </div>
+                `;
+
+                btn.addEventListener('click', () => {
+                    selectCurrency(val, code);
+                });
+
+                listContainer.appendChild(btn);
+            });
+        });
+
+        // Set initial trigger UI
+        updateCurrencyTriggerUI();
+
+        function selectCurrency(val, code) {
+            const matchingOpt = Array.from(select.options).find(opt => opt.value === val && opt.getAttribute('data-code') === code) || Array.from(select.options).find(opt => opt.value === val);
+            if (matchingOpt) {
+                matchingOpt.selected = true;
+                select.value = matchingOpt.value;
+            } else {
+                select.value = val;
+            }
+            select.dispatchEvent(new Event('change', { bubbles: true }));
+            updateCurrencyTriggerUI();
+            closeModal();
+        }
+
+        let currentFilter = 'all';
+
+        function filterCurrencies() {
+            const query = searchInput.value.trim().toLowerCase();
+            const items = listContainer.querySelectorAll('.zf-curr-item');
+            const groupTitles = listContainer.querySelectorAll('.zf-curr-group-title');
+
+            if (searchClear) {
+                searchClear.style.display = query ? 'flex' : 'none';
+            }
+
+            let totalVisible = 0;
+            const visibleGroups = new Set();
+
+            items.forEach(item => {
+                const itemGroup = item.dataset.group || '';
+                const itemKeywords = item.dataset.keywords || '';
+
+                let matchesCategory = true;
+                if (currentFilter === 'popular') {
+                    matchesCategory = itemGroup.includes('popular') || itemGroup.includes('africa');
+                } else if (currentFilter === 'global') {
+                    matchesCategory = itemGroup.includes('popular') || itemGroup.includes('global');
+                } else if (currentFilter === 'europe') {
+                    matchesCategory = itemGroup.includes('europe') || itemGroup.includes('kingdom');
+                } else if (currentFilter === 'americas') {
+                    matchesCategory = itemGroup.includes('americas') || itemGroup.includes('caribbean');
+                } else if (currentFilter === 'asia') {
+                    matchesCategory = itemGroup.includes('asia') || itemGroup.includes('pacific');
+                }
+
+                const matchesQuery = !query || itemKeywords.includes(query);
+
+                if (matchesCategory && matchesQuery) {
+                    item.style.display = 'flex';
+                    visibleGroups.add(itemGroup);
+                    totalVisible++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            groupTitles.forEach(title => {
+                const g = title.dataset.group || '';
+                title.style.display = visibleGroups.has(g) ? 'block' : 'none';
+            });
+
+            if (emptyState) {
+                if (totalVisible === 0) {
+                    emptyState.style.display = 'block';
+                    if (emptyQuery) emptyQuery.textContent = query;
+                    listContainer.style.display = 'none';
+                } else {
+                    emptyState.style.display = 'none';
+                    listContainer.style.display = 'block';
+                }
+            }
+        }
+
+        function openModal() {
+            modal.classList.add('is-open');
+            modal.setAttribute('aria-hidden', 'false');
+            trigger.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden';
+
+            // Reset search input
+            if (searchInput) {
+                searchInput.value = '';
+                if (searchClear) searchClear.style.display = 'none';
+                setTimeout(() => searchInput.focus(), 80);
+            }
+
+            // Reset category filter to 'all'
+            currentFilter = 'all';
+            chips.forEach(c => c.classList.toggle('active', c.dataset.filter === 'all'));
+            filterCurrencies();
+
+            // Scroll selected item into view
+            setTimeout(() => {
+                const selectedItem = listContainer.querySelector('.zf-curr-item.is-selected');
+                if (selectedItem) {
+                    selectedItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                }
+            }, 100);
+        }
+
+        function closeModal() {
+            modal.classList.remove('is-open');
+            modal.setAttribute('aria-hidden', 'true');
+            trigger.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+            trigger.focus();
+        }
+
+        trigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            openModal();
+        });
+
+        if (triggerWrap) {
+            triggerWrap.addEventListener('click', (e) => {
+                if (e.target !== trigger && !trigger.contains(e.target)) {
+                    openModal();
+                }
+            });
+        }
+
+        if (backdrop) backdrop.addEventListener('click', closeModal);
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+        document.addEventListener('keydown', (e) => {
+            if (!modal.classList.contains('is-open')) return;
+
+            if (e.key === 'Escape') {
+                closeModal();
+            } else if (e.key === 'Enter' && document.activeElement === searchInput) {
+                e.preventDefault();
+                const firstVisible = listContainer.querySelector('.zf-curr-item[style*="display: flex"], .zf-curr-item:not([style*="display: none"])');
+                if (firstVisible) {
+                    firstVisible.click();
+                }
+            }
+        });
+
+        if (searchInput) {
+            searchInput.addEventListener('input', filterCurrencies);
+        }
+
+        if (searchClear) {
+            searchClear.addEventListener('click', () => {
+                searchInput.value = '';
+                searchInput.focus();
+                filterCurrencies();
+            });
+        }
+
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                currentFilter = 'all';
+                chips.forEach(c => c.classList.toggle('active', c.dataset.filter === 'all'));
+                filterCurrencies();
+                if (searchInput) searchInput.focus();
+            });
+        }
+
+        chips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                chips.forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                currentFilter = chip.dataset.filter || 'all';
+                filterCurrencies();
+            });
+        });
+
+        // Listen for changes on native select
+        select.addEventListener('change', () => {
+            updateCurrencyTriggerUI();
+        });
+    }
+
+    // Initialize the searchable currency picker
+    initSearchableCurrencyPicker();
 
     // ── Onboarding Form Logic ──────────────────────────────────────────
     const onboardForm = document.getElementById('onboardForm');
