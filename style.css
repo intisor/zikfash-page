@@ -3618,29 +3618,30 @@ body.has-focused-input .wa-chat-prompt,
 /* Search Box */
 .zf-curr-search-box {
     position: relative;
-    padding: 12px 18px 8px;
+    padding: 10px 18px 8px;
     background: #FFFFFF;
 }
 
 .zf-curr-search-icon {
     position: absolute;
-    left: 30px;
+    left: 28px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 20px;
+    font-size: 19px;
     color: var(--gold);
     pointer-events: none;
+    line-height: 1;
 }
 
 .zf-curr-search-box input {
     width: 100%;
-    padding: 11px 40px 11px 40px;
-    font-size: 0.95rem;
+    padding: 9px 36px 9px 38px;
+    font-size: 0.88rem;
     font-family: 'Lato', sans-serif;
     color: var(--espresso);
     background: #FAF8F5;
     border: 1.5px solid rgba(184, 149, 90, 0.22);
-    border-radius: 12px;
+    border-radius: 10px;
     outline: none;
     transition: all 0.2s ease;
     box-sizing: border-box;
@@ -3652,9 +3653,14 @@ body.has-focused-input .wa-chat-prompt,
     box-shadow: 0 0 0 3px rgba(184, 149, 90, 0.15);
 }
 
+.zf-curr-search-box input::placeholder {
+    color: var(--text-faint);
+    font-size: 0.85rem;
+}
+
 .zf-curr-search-clear {
     position: absolute;
-    right: 30px;
+    right: 26px;
     top: 50%;
     transform: translateY(-50%);
     background: transparent;
@@ -3674,12 +3680,14 @@ body.has-focused-input .wa-chat-prompt,
 /* Filter chips */
 .zf-curr-filter-chips {
     display: flex;
-    gap: 6px;
-    padding: 0 18px 10px;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 18px 10px;
     overflow-x: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
     background: #FFFFFF;
+    border-bottom: 1px solid rgba(184, 149, 90, 0.08);
 }
 
 .zf-curr-filter-chips::-webkit-scrollbar {
@@ -3688,28 +3696,30 @@ body.has-focused-input .wa-chat-prompt,
 
 .curr-chip {
     padding: 5px 12px;
-    font-size: 0.78rem;
+    font-size: 0.74rem;
     font-weight: 700;
     color: var(--text-dark);
-    background: rgba(184, 149, 90, 0.08);
-    border: 1px solid rgba(184, 149, 90, 0.15);
-    border-radius: 100px;
+    background: #FAF8F5;
+    border: 1px solid rgba(184, 149, 90, 0.18);
+    border-radius: 999px;
     cursor: pointer;
     white-space: nowrap;
-    transition: all 0.18s ease;
+    transition: all 0.15s ease;
     flex-shrink: 0;
+    line-height: 1.2;
 }
 
 .curr-chip:hover {
-    background: rgba(184, 149, 90, 0.16);
+    background: rgba(184, 149, 90, 0.14);
     color: var(--espresso);
+    border-color: var(--gold);
 }
 
 .curr-chip.active {
-    background: var(--gold);
-    color: #FFFFFF;
-    border-color: var(--gold);
-    box-shadow: 0 2px 8px rgba(184, 149, 90, 0.35);
+    background: var(--espresso);
+    color: #FAF8F5;
+    border-color: var(--espresso);
+    box-shadow: 0 2px 6px rgba(26, 18, 8, 0.18);
 }
 
 /* List container */
@@ -3907,8 +3917,8 @@ body.has-focused-input .wa-chat-prompt,
     .zf-curr-sheet {
         width: 100%;
         max-width: 100%;
-        max-height: 85vh;
-        border-radius: 24px 24px 0 0;
+        max-height: 60vh;
+        border-radius: 20px 20px 0 0;
         border-bottom: none;
         border-left: none;
         border-right: none;
@@ -3921,25 +3931,102 @@ body.has-focused-input .wa-chat-prompt,
 
     .zf-curr-handle {
         display: block;
+        width: 36px;
+        height: 4px;
+        margin: 8px auto 2px;
     }
 
     .zf-curr-header {
-        padding: 10px 16px 12px;
+        padding: 8px 14px 8px;
+    }
+
+    .zf-curr-header-icon {
+        font-size: 20px;
+        padding: 6px;
+        border-radius: 8px;
+    }
+
+    .zf-curr-header h3 {
+        font-size: 0.98rem;
+    }
+
+    .zf-curr-subtext {
+        font-size: 0.73rem;
+        line-height: 1.25;
+    }
+
+    .zf-curr-close-btn {
+        width: 30px;
+        height: 30px;
+    }
+
+    .zf-curr-close-btn span {
+        font-size: 18px;
     }
 
     .zf-curr-search-box {
-        padding: 10px 16px 8px;
+        padding: 6px 14px 6px;
+    }
+
+    .zf-curr-search-icon {
+        left: 24px;
+        font-size: 18px;
+    }
+
+    .zf-curr-search-clear {
+        right: 22px;
+    }
+
+    .zf-curr-search-box input {
+        padding: 8px 32px 8px 34px;
+        font-size: 0.84rem;
+        border-radius: 8px;
     }
 
     .zf-curr-filter-chips {
-        padding: 0 16px 10px;
+        padding: 0 14px 8px;
+        gap: 6px;
+    }
+
+    .curr-chip {
+        padding: 4px 10px;
+        font-size: 0.72rem;
     }
 
     .zf-curr-list {
-        padding: 6px 12px 24px;
+        padding: 4px 10px 18px;
+    }
+
+    .zf-curr-group-title {
+        font-size: 0.65rem;
+        padding: 8px 8px 4px;
+        margin-top: 4px;
     }
 
     .zf-curr-item {
-        padding: 10px 12px;
+        padding: 7px 10px;
+        min-height: 42px;
+        border-radius: 8px;
+        margin-bottom: 2px;
+    }
+
+    .zf-curr-badge {
+        min-width: 32px;
+        height: 28px;
+        font-size: 0.78rem;
+        border-radius: 6px;
+    }
+
+    .zf-curr-name {
+        font-size: 0.84rem;
+    }
+
+    .zf-curr-sub {
+        font-size: 0.70rem;
+    }
+
+    .zf-curr-code-tag {
+        font-size: 0.68rem;
+        padding: 2px 5px;
     }
 }

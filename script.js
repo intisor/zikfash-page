@@ -706,9 +706,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 let matchesCategory = true;
                 if (currentFilter === 'popular') {
-                    matchesCategory = itemGroup.includes('popular') || itemGroup.includes('africa');
-                } else if (currentFilter === 'global') {
                     matchesCategory = itemGroup.includes('popular') || itemGroup.includes('global');
+                } else if (currentFilter === 'africa') {
+                    matchesCategory = itemGroup.includes('africa');
                 } else if (currentFilter === 'europe') {
                     matchesCategory = itemGroup.includes('europe') || itemGroup.includes('kingdom');
                 } else if (currentFilter === 'americas') {
