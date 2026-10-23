@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fabric Preview &amp; Style Visualizer for Tailors — ZikFash</title>
+    <meta name="description" content="Show customers how their Ankara, lace, or senator fabric looks on garments before touching scissors. Eliminate arguments and cutting disputes with ZikFash Fabric Visualizer.">
+    <link rel="canonical" href="https://zikfash.com/fabric-preview-for-tailors.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    
+    <!-- Google Material Symbols -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&icon_names=accessibility,accessibility_new,assignment,auto_awesome_motion,camera,check_circle,close,cloud_sync,content_cut,draw,error,expand_more,image_search,install_mobile,lock,menu,menu_book,monitoring,palette,payments,person,photo_camera,public,rule,search,search_off,send_to_mobile,signal_wifi_off,smartphone,star,store,straighten,style,styler,toll,verified,visibility,wifi_off,workspace_premium&display=block" />
+    <noscript>
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&icon_names=accessibility,accessibility_new,assignment,auto_awesome_motion,camera,check_circle,close,cloud_sync,content_cut,draw,error,expand_more,image_search,install_mobile,lock,menu,menu_book,monitoring,palette,payments,person,photo_camera,public,rule,search,search_off,send_to_mobile,signal_wifi_off,smartphone,star,store,straighten,style,styler,toll,verified,visibility,wifi_off,workspace_premium&display=block" />
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" />
+    </noscript>
+    <link rel="stylesheet" href="style.css?v=2">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <!-- Schema.org Rich Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://zikfash.com/fabric-preview-for-tailors.html#application",
+          "name": "ZikFash Fabric Visualizer",
+          "applicationCategory": "DesignApplication",
+          "operatingSystem": "Web, Android, iOS",
+          "description": "Pre-cut fabric visualizer for African fashion designers that drapes Ankara, Senator fabrics, and lace onto 3D garment models to prevent customer arguments before cutting.",
+          "featureList": [
+            "Real-time fabric texture draping on African garments",
+            "Senator, Agbada, Kaftan, Suit, and Gown templates",
+            "WhatsApp shareable style mockups",
+            "Pre-cut client alignment"
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://zikfash.com/fabric-preview-for-tailors.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How does showing fabric previews prevent customer disputes?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Many customers bring fabric thinking it will look a certain way on a complex style. When they see the preview upfront, they can approve or change their mind before scissors touch the material, protecting the tailor from blame."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What African garment styles can I preview?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "ZikFash supports classic and contemporary African styles including Senator suits, Agbada (grand boubou), Kaftans, Dashikis, corporate blazers, and women's corsets and gowns."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <style>
+        .page-hero {
+            padding: 130px 20px 60px;
+            background: linear-gradient(180deg, #FAF6F0 0%, #F5EEDB 100%);
+            text-align: center;
+        }
+        .page-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(184, 149, 90, 0.15);
+            color: #7A6040;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 20px;
+        }
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: #1A1208;
+            max-width: 860px;
+            margin: 0 auto 16px;
+            line-height: 1.2;
+        }
+        .page-title span { color: #B8955A; }
+        .page-sub {
+            font-size: 1.15rem;
+            color: #5A4730;
+            max-width: 720px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+        .content-section {
+            padding: 70px 20px;
+            max-width: 1080px;
+            margin: 0 auto;
+        }
+        .benefit-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 26px;
+            margin: 50px 0;
+        }
+        .b-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(184, 149, 90, 0.25);
+            border-radius: 20px;
+            padding: 34px 26px;
+            box-shadow: 0 10px 30px rgba(26, 18, 8, 0.04);
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+        .b-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 36px rgba(184, 149, 90, 0.14);
+            border-color: #B8955A;
+        }
+        .b-icon {
+            font-size: 32px;
+            color: #B8955A;
+            background: rgba(184, 149, 90, 0.12);
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+        .b-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            color: #1A1208;
+            margin-bottom: 10px;
+        }
+        .b-card p {
+            font-size: 0.94rem;
+            color: #5A4730;
+            line-height: 1.55;
+        }
+        @media (max-width: 768px) {
+            .page-title { font-size: 2.1rem; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="https://zikfash.com/" class="logo">
+                <img src="zeelogo.webp" alt="ZikFash Logo" class="logo-img"> ZikFash
+            </a>
+            <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation menu">
+            <label for="nav-toggle" class="nav-toggle-label">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+            <nav class="nav">
+                <a href="https://zikfash.com/#features">Features</a>
+                <a href="https://zikfash.com/digital-measurement-book.html">Digital Book</a>
+                <a href="https://zikfash.com/fabric-preview-for-tailors.html" style="color: var(--gold);">Fabric Visualizer</a>
+                <a href="https://zikfash.com/how-to-install.html">Install Guide</a>
+                <a href="https://zikfash.com/#pricing">Pricing</a>
+                <a href="https://app.zikfash.com" class="btn btn-primary" style="padding: 10px 22px;">Open App Free</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <div class="page-badge">
+                <span class="material-symbols-outlined" style="font-size: 18px;">content_cut</span>
+                Stop Cutting Disputes
+            </div>
+            <h1 class="page-title">Show Customers Their Fabric on the Style <span>Before You Cut</span></h1>
+            <p class="page-sub">No more arguments over "this isn't what I imagined." Snap a photo of your client's fabric and preview it instantly on Senator, Agbada, Kaftan, or Suit styles.</p>
+            <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+                <a href="https://app.zikfash.com" class="btn btn-primary" style="font-size: 1.05rem; padding: 14px 28px;">
+                    <span class="material-symbols-outlined" style="margin-right: 6px;">visibility</span> Preview Fabric on Styles (50 Free Coins)
+                </a>
+                <a href="https://zikfash.com/how-to-install.html" class="btn btn-secondary" style="font-size: 1.05rem; padding: 14px 28px;">
+                    How to Install
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="content-section">
+        <div style="text-align: center; max-width: 720px; margin: 0 auto 30px;">
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 2.2rem; color: #1A1208; margin-bottom: 12px;">Stop Arguments Before Scissors Touch Fabric</h2>
+            <p style="color: #5A4730; font-size: 1.05rem;">The easiest way to gain customer confidence and charge premium tailoring prices.</p>
+        </div>
+
+        <div class="benefit-cards-grid">
+            <div class="b-card">
+                <div class="b-icon">
+                    <span class="material-symbols-outlined">palette</span>
+                </div>
+                <h3>Drape Any Fabric Pattern</h3>
+                <p>Whether it is pure wool, cashmere, guinea brocade, Ankara wax, or lace, ZikFash maps the exact weave and print onto realistic models.</p>
+            </div>
+
+            <div class="b-card">
+                <div class="b-icon">
+                    <span class="material-symbols-outlined">send_to_mobile</span>
+                </div>
+                <h3>Send WhatsApp Previews</h3>
+                <p>Send a high-definition image preview directly to your customer's WhatsApp so they sign off on the collar design and cut before you begin tailoring.</p>
+            </div>
+
+            <div class="b-card">
+                <div class="b-icon">
+                    <span class="material-symbols-outlined">verified</span>
+                </div>
+                <h3>Zero "It Doesn't Fit" Disputes</h3>
+                <p>When the client sees the look upfront, they love the finished garment and recommend you to their friends with pride.</p>
+            </div>
+        </div>
+
+        <!-- Banner -->
+        <div style="text-align: center; padding: 50px 20px; background: #1A1208; color: #FAF6F0; border-radius: 20px; margin: 40px 0;">
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 2.2rem; color: #D4A84B; margin-bottom: 12px;">Start Showing Previews to Your Clients Today</h2>
+            <p style="color: #E8DCC8; font-size: 1.1rem; max-width: 620px; margin: 0 auto 24px;">Get 50 bonus coins on sign-up to try fabric previews immediately on your phone.</p>
+            <a href="https://app.zikfash.com" class="btn btn-primary" style="font-size: 1.15rem; padding: 15px 36px;">
+                Try Fabric Visualizer Free
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="https://zikfash.com/" class="logo footer-logo">
+                        <img src="zeelogo.webp" alt="ZikFash Logo" class="logo-img"> ZikFash
+                    </a>
+                    <p class="footer-tagline">The offline digital measurement book &amp; AI studio for African fashion professionals.</p>
+                    <p style="font-size: 0.85rem; color: #a39582; margin-top: 10px;">
+                        <strong>ZikFash Technology Limited</strong><br>
+                        RC - 9755589 • Festac Town, Lagos State, Nigeria<br>
+                        NDPC Certified Data Controller &amp; Processor
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h3 class="footer-heading">Product Solutions</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://zikfash.com/digital-measurement-book.html">Digital Measurement Book</a></li>
+                        <li><a href="https://zikfash.com/offline-tailoring-app.html">Offline Tailoring App</a></li>
+                        <li><a href="https://zikfash.com/ai-measurement-book-scanner.html">AI Old Book Scanner</a></li>
+                        <li><a href="https://zikfash.com/fabric-preview-for-tailors.html">Fabric Style Visualizer</a></li>
+                        <li><a href="https://zikfash.com/how-to-install.html">How to Install (PWA)</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 class="footer-heading">Support &amp; Trust</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://zikfash.com/#faq">Frequently Asked</a></li>
+                        <li><a href="privacy.html#terms">Terms of Service</a></li>
+                        <li><a href="privacy.html#privacy">Privacy Policy (NDPR)</a></li>
+                        <li><a href="privacy.html#refunds">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 class="footer-heading">Connect</h3>
+                    <p style="font-size: 0.9rem; color: #a39582; margin-bottom: 12px;">Call / WhatsApp Support:</p>
+                    <a href="tel:+2348025202210" style="color: #b8955a; font-weight: 700; font-size: 1.05rem;">+234 802 520 2210</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ZikFash Technology Limited (RC - 9755589). All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

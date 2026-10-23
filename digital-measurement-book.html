@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Measurement Book for Tailors &amp; Fashion Designers — ZikFash</title>
+    <meta name="description" content="Replace paper measurement notebooks with ZikFash's 100% offline digital measurement book. Visual slider tape, instant customer search, WhatsApp receipts, and zero typing mistakes.">
+    <link rel="canonical" href="https://zikfash.com/digital-measurement-book.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    
+    <!-- Google Material Symbols -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&icon_names=accessibility,accessibility_new,assignment,auto_awesome_motion,calendar_month,call,camera,cancel,card_giftcard,check,check_circle,close,cloud_sync,delete_forever,design_services,draw,error,expand_more,image_search,install_mobile,lock,menu,menu_book,monitoring,payments,person,public,rule,search,search_off,send_to_mobile,signal_wifi_off,smartphone,star,store,straighten,style,styler,toll,verified,wifi_off,workspace_premium&display=block" />
+    <noscript>
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&icon_names=accessibility,accessibility_new,assignment,auto_awesome_motion,calendar_month,call,camera,cancel,card_giftcard,check,check_circle,close,cloud_sync,delete_forever,design_services,draw,error,expand_more,image_search,install_mobile,lock,menu,menu_book,monitoring,payments,person,public,rule,search,search_off,send_to_mobile,signal_wifi_off,smartphone,star,store,straighten,style,styler,toll,verified,wifi_off,workspace_premium&display=block" />
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" />
+    </noscript>
+    <link rel="stylesheet" href="style.css?v=2">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <!-- Schema.org Rich Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://zikfash.com/digital-measurement-book.html#application",
+          "name": "ZikFash Digital Measurement Book",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Web, Android, iOS",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "NGN",
+            "description": "Unlimited customer records and offline measurement tracking are completely free forever."
+          },
+          "featureList": [
+            "Anatomical Visual Slider Tape",
+            "100% Offline Measurement Storage",
+            "Instant Customer Search in 2 seconds",
+            "Automatic WhatsApp Receipts and Invoices",
+            "Encrypted Cloud Backup"
+          ],
+          "description": "The offline digital measurement book that protects African tailors from lost paper ledgers and costly cutting mistakes."
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://zikfash.com/digital-measurement-book.html#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Why switch from a paper measurement notebook to ZikFash?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Paper books tear, get soaked with oil or rain, and handwritten numbers get misread when cutting. ZikFash saves all sizes permanently on your phone with zero monthly fees, searchable in 2 seconds."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How does the visual slider tape stop cutting mistakes?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Instead of typing numbers on a small keyboard where typos happen (e.g., typing 48 instead of 38), ZikFash uses a visual anatomical slider calibrated in inches and centimeters matching real tailor tapes."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I use the digital measurement book without internet data?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, 100%. ZikFash is built offline-first. All customer sizes, collar widths, sleeve lengths, and trouser measurements are stored right on your device memory."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <style>
+        .page-hero {
+            padding: 130px 20px 60px;
+            background: linear-gradient(180deg, #FAF6F0 0%, #F5EEDB 100%);
+            text-align: center;
+        }
+        .page-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(184, 149, 90, 0.15);
+            color: #7A6040;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 20px;
+        }
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: #1A1208;
+            max-width: 860px;
+            margin: 0 auto 16px;
+            line-height: 1.2;
+        }
+        .page-title span {
+            color: #B8955A;
+        }
+        .page-sub {
+            font-size: 1.15rem;
+            color: #5A4730;
+            max-width: 720px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+        .content-section {
+            padding: 70px 20px;
+            max-width: 1080px;
+            margin: 0 auto;
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            margin: 40px 0 60px;
+        }
+        .compare-card {
+            border-radius: 20px;
+            padding: 34px 28px;
+        }
+        .compare-bad {
+            background: #FFF5F5;
+            border: 1px solid #FFCDD2;
+        }
+        .compare-good {
+            background: #F4FAF4;
+            border: 2px solid #81C784;
+            box-shadow: 0 10px 30px rgba(46, 125, 50, 0.08);
+        }
+        .compare-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        .compare-bad .compare-header { color: #C62828; }
+        .compare-good .compare-header { color: #2E7D32; }
+        .feature-showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin: 40px 0;
+        }
+        .showcase-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(184, 149, 90, 0.25);
+            border-radius: 18px;
+            padding: 30px 24px;
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+        .showcase-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 34px rgba(184, 149, 90, 0.14);
+            border-color: #B8955A;
+        }
+        .showcase-icon {
+            font-size: 32px;
+            color: #B8955A;
+            background: rgba(184, 149, 90, 0.12);
+            width: 54px;
+            height: 54px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+        .showcase-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: #1A1208;
+            margin-bottom: 10px;
+        }
+        .showcase-card p {
+            font-size: 0.92rem;
+            color: #5A4730;
+            line-height: 1.55;
+        }
+        .cta-banner {
+            background: #1A1208;
+            color: #FAF6F0;
+            border-radius: 24px;
+            padding: 50px 30px;
+            text-align: center;
+            margin: 50px 0;
+        }
+        @media (max-width: 768px) {
+            .page-title { font-size: 2.1rem; }
+            .comparison-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="https://zikfash.com/" class="logo">
+                <img src="zeelogo.webp" alt="ZikFash Logo" class="logo-img"> ZikFash
+            </a>
+            <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation menu">
+            <label for="nav-toggle" class="nav-toggle-label">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+            <nav class="nav">
+                <a href="https://zikfash.com/#features">Features</a>
+                <a href="https://zikfash.com/digital-measurement-book.html" style="color: var(--gold);">Digital Book</a>
+                <a href="https://zikfash.com/how-to-install.html">Install Guide</a>
+                <a href="https://zikfash.com/#pricing">Pricing</a>
+                <a href="https://zikfash.com/#faq">FAQ</a>
+                <a href="https://app.zikfash.com" class="btn btn-primary" style="padding: 10px 22px;">Open App Free</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <div class="page-badge">
+                <span class="material-symbols-outlined" style="font-size: 18px;">menu_book</span>
+                The Modern Tailor's Measurement Book
+            </div>
+            <h1 class="page-title">Stop Losing Customer Sizes to <span>Torn Paper Notebooks</span></h1>
+            <p class="page-sub">ZikFash replaces physical ledger books with an offline digital measurement book on your phone. Calibrated visual sliders, 2-second client search, and zero ruined fabrics.</p>
+            <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+                <a href="https://app.zikfash.com" class="btn btn-primary" style="font-size: 1.05rem; padding: 14px 28px;">
+                    <span class="material-symbols-outlined" style="margin-right: 6px;">straighten</span> Start Taking Measurements Free
+                </a>
+                <a href="https://zikfash.com/how-to-install.html" class="btn btn-secondary" style="font-size: 1.05rem; padding: 14px 28px;">
+                    How to Install on Phone
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <main class="content-section">
+        <div style="text-align: center; max-width: 700px; margin: 0 auto 30px;">
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 2.2rem; color: #1A1208; margin-bottom: 12px;">The Cost of Paper vs. The Speed of Digital</h2>
+            <p style="color: #5A4730; font-size: 1.05rem;">Why professional African tailors in Lagos, Abuja, Accra, and Nairobi are switching.</p>
+        </div>
+
+        <div class="comparison-grid">
+            <div class="compare-card compare-bad">
+                <div class="compare-header">
+                    <span class="material-symbols-outlined">delete_forever</span>
+                    The Old Paper Book
+                </div>
+                <ul style="list-style: none; display: flex; flex-direction: column; gap: 14px; color: #5A4730;">
+                    <li>❌ Pages tear, get stained with tea/oil, or rot from damp market rain.</li>
+                    <li>❌ Spending 15 minutes flipping pages searching for a customer's size from 6 months ago.</li>
+                    <li>❌ Handwriting mistakes (reading 34" instead of 43") leading to wasted expensive lace or cashmere.</li>
+                    <li>❌ If the notebook is misplaced or stolen, decades of customer records vanish forever.</li>
+                </ul>
+            </div>
+
+            <div class="compare-card compare-good">
+                <div class="compare-header">
+                    <span class="material-symbols-outlined">check_circle</span>
+                    The ZikFash Digital Book
+                </div>
+                <ul style="list-style: none; display: flex; flex-direction: column; gap: 14px; color: #1B5E20;">
+                    <li>✓ <strong>Search Any Client in 2 Seconds:</strong> Just type the first two letters of their name or phone number.</li>
+                    <li>✓ <strong>Anatomical Visual Slider Tape:</strong> Slide to exact inches or cm. No small keyboard typos.</li>
+                    <li>✓ <strong>100% Offline Access:</strong> Works in market basements with zero mobile data or WiFi.</li>
+                    <li>✓ <strong>Cloud Encrypted Backup:</strong> Change or lose your phone, sign in, and every record restores instantly.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Key Capabilities Showcase -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 2.2rem; color: #1A1208;">Engineered Specifically for Fashion Designers</h2>
+        </div>
+
+        <div class="feature-showcase-grid">
+            <div class="showcase-card">
+                <div class="showcase-icon">
+                    <span class="material-symbols-outlined">straighten</span>
+                </div>
+                <h3>Visual Measurement Slider</h3>
+                <p>Never misread your apprentice's messy handwriting again. Visual tape measure sliders let you adjust chest, neck, sleeve, waist, thigh, and inseam with one thumb.</p>
+            </div>
+
+            <div class="showcase-card">
+                <div class="showcase-icon">
+                    <span class="material-symbols-outlined">send_to_mobile</span>
+                </div>
+                <h3>WhatsApp Digital Receipts</h3>
+                <p>Send professional branded WhatsApp receipts with style details, balance owed, and delivery dates in 1 click right from the measurement card.</p>
+            </div>
+
+            <div class="showcase-card">
+                <div class="showcase-icon">
+                    <span class="material-symbols-outlined">payments</span>
+                </div>
+                <h3>Order &amp; Debt Meter</h3>
+                <p>Track customer deposit balances automatically. The built-in Debt Meter alerts you before handing over finished Agbadas or suits to clients who still owe.</p>
+            </div>
+        </div>
+
+        <!-- Banner -->
+        <div class="cta-banner">
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 2.4rem; color: #D4A84B; margin-bottom: 14px;">Ready to Retire Your Paper Notebook?</h2>
+            <p style="font-size: 1.1rem; color: #E8DCC8; max-width: 620px; margin: 0 auto 28px;">ZikFash is 100% free with ₦0 monthly subscriptions. Keep unlimited customer measurements forever.</p>
+            <a href="https://app.zikfash.com" class="btn btn-primary" style="font-size: 1.15rem; padding: 15px 36px;">
+                Open Your Free Digital Book
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="https://zikfash.com/" class="logo footer-logo">
+                        <img src="zeelogo.webp" alt="ZikFash Logo" class="logo-img"> ZikFash
+                    </a>
+                    <p class="footer-tagline">The offline digital measurement book &amp; AI studio for African fashion professionals.</p>
+                    <p style="font-size: 0.85rem; color: #a39582; margin-top: 10px;">
+                        <strong>ZikFash Technology Limited</strong><br>
+                        RC - 9755589 • Festac Town, Lagos State, Nigeria<br>
+                        NDPC Certified Data Controller &amp; Processor
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h3 class="footer-heading">Product Solutions</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://zikfash.com/digital-measurement-book.html">Digital Measurement Book</a></li>
+                        <li><a href="https://zikfash.com/offline-tailoring-app.html">Offline Tailoring App</a></li>
+                        <li><a href="https://zikfash.com/ai-measurement-book-scanner.html">AI Old Book Scanner</a></li>
+                        <li><a href="https://zikfash.com/fabric-preview-for-tailors.html">Fabric Style Visualizer</a></li>
+                        <li><a href="https://zikfash.com/how-to-install.html">How to Install (PWA)</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 class="footer-heading">Support &amp; Trust</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://zikfash.com/#faq">Frequently Asked</a></li>
+                        <li><a href="privacy.html#terms">Terms of Service</a></li>
+                        <li><a href="privacy.html#privacy">Privacy Policy (NDPR)</a></li>
+                        <li><a href="privacy.html#refunds">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 class="footer-heading">Connect</h3>
+                    <p style="font-size: 0.9rem; color: #a39582; margin-bottom: 12px;">Call / WhatsApp Support:</p>
+                    <a href="tel:+2348025202210" style="color: #b8955a; font-weight: 700; font-size: 1.05rem;">+234 802 520 2210</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ZikFash Technology Limited (RC - 9755589). All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
