@@ -69,38 +69,89 @@
       "@context": "https://schema.org",
       "@graph": [
         {
+          "@type": "Organization",
+          "@id": "https://zikfash.com/#organization",
+          "name": "ZikFash Technology Limited",
+          "legalName": "ZikFash Technology Limited",
+          "identifier": "RC - 9755589",
+          "url": "https://zikfash.com/",
+          "logo": "https://zikfash.com/zeelogo.webp",
+          "image": "https://zikfash.com/assets/app-screenshot.webp",
+          "description": "ZikFash Technology Limited is an African fashion-tech enterprise providing offline digital measurement books, AI notebook scanners, and fabric visualization software for tailors and fashion designers.",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Festac Town",
+            "addressLocality": "Festac Town",
+            "addressRegion": "Lagos State",
+            "addressCountry": "NG"
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+234-802-520-2210",
+            "contactType": "Customer Support",
+            "areaServed": ["NG", "GH", "KE", "ZA", "GB", "US"],
+            "availableLanguage": ["English", "Pidgin"]
+          },
+          "knowsAbout": [
+            "African Fashion Design",
+            "Digital Tailoring Measurement Book",
+            "Offline Tailoring Software",
+            "Fabric and Garment Previews",
+            "AI Handwriting Recognition for Tailor Notebooks",
+            "WhatsApp Tailoring Invoicing"
+          ],
+          "sameAs": [
+            "https://www.tiktok.com/@zikfash",
+            "https://www.instagram.com/zikfash",
+            "https://twitter.com/zikfash",
+            "https://facebook.com/zikfash"
+          ]
+        },
+        {
           "@type": "SoftwareApplication",
           "@id": "https://zikfash.com/#application",
-          "name": "ZikFash Tech",
+          "name": "ZikFash",
+          "alternateName": "ZikFash Tailoring Operating System",
           "url": "https://zikfash.com/",
           "applicationCategory": "BusinessApplication",
-          "operatingSystem": "Web, Android, iOS, Windows, macOS, Linux",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-          },
-          "description": "ZikFash is the ultimate digital measurement book and AI assistant for professional tailors. Generate style previews, track measurements, and send receipts offline.",
+          "operatingSystem": "Web, Android (PWA), iOS (PWA), Windows, macOS",
+          "installUrl": "https://app.zikfash.com",
+          "description": "ZikFash is the offline digital measurement book and AI studio for tailors and fashion designers. Works without internet, prevents cutting mistakes with visual anatomical sliders, scans old paper ledgers, and generates instant WhatsApp receipts.",
           "image": "https://zikfash.com/assets/app-screenshot.webp",
           "publisher": {
-            "@type": "Organization",
-            "@id": "https://zikfash.com/#organization",
-            "name": "ZikFash Tech",
-            "url": "https://zikfash.com",
-            "logo": "https://zikfash.com/favicon.ico"
+            "@id": "https://zikfash.com/#organization"
           },
-          "author": {
-            "@type": "Person",
-            "@id": "https://zikfash.com/#person",
-            "name": "ZikFash Team",
-            "url": "https://zikfash.com"
-          }
+          "offers": [
+            {
+              "@type": "Offer",
+              "name": "Free Core Tailoring Ledger",
+              "price": "0",
+              "priceCurrency": "NGN",
+              "description": "Unlimited customer records, visual measurement sliders, 100% offline access, and WhatsApp receipts are completely free forever."
+            },
+            {
+              "@type": "Offer",
+              "name": "AI Studio Micro-Packs",
+              "price": "500",
+              "priceCurrency": "NGN",
+              "description": "Pay-as-you-go AI coin bundles starting at ₦500 for old notebook OCR scanning and fabric style previews."
+            }
+          ],
+          "featureList": [
+            "100% Offline-First Measurement Storage",
+            "Anatomical Visual Slider Tape (zero typing errors)",
+            "AI Handwritten Measurement Book Scanner",
+            "Fabric Style Visualizer and Previews",
+            "WhatsApp Digital Invoices and Receipts",
+            "Live Customer Order Tracker and Balance Meter",
+            "Progressive Web App (zero phone storage footprint)"
+          ]
         },
         {
           "@type": "WebPage",
           "@id": "https://zikfash.com/#webpage",
           "url": "https://zikfash.com/",
-          "name": "ZikFash - The Operating System for African Fashion",
+          "name": "ZikFash - The Offline Digital Measurement Book & AI Studio for Tailors",
           "isPartOf": {
             "@type": "WebSite",
             "@id": "https://zikfash.com/#website",
@@ -110,49 +161,74 @@
           "about": {
             "@id": "https://zikfash.com/#application"
           },
-          "description": "ZikFash is the ultimate digital measurement book and AI assistant for tailors. Generate style previews, track orders, and send WhatsApp receipts offline."
+          "description": "Stop losing customer sizes to torn paper books. ZikFash works 100% offline, digitizes handwritten tailor books, and generates instant WhatsApp receipts."
         },
         {
           "@type": "FAQPage",
+          "@id": "https://zikfash.com/#faq",
           "mainEntity": [
             {
               "@type": "Question",
-              "name": "Is ZikFash free?",
+              "name": "Is ZikFash really free to use?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes, the main app is 100% free. Saving measurements, working offline, and sending WhatsApp receipts will always be completely free."
+                "text": "Yes, ZikFash core tailoring features are 100% free with ₦0 monthly subscriptions. Adding unlimited customers, saving body measurements, working offline without internet data, and sending WhatsApp receipts are free forever. Optional AI features (fabric style previews and remote scans) use pay-as-you-go AI coins starting from ₦500, with 50 free bonus coins on sign-up."
               }
             },
             {
               "@type": "Question",
-              "name": "Does ZikFash work offline?",
+              "name": "Does ZikFash work completely offline without internet data?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes! ZikFash works 100% offline. No internet required after first load. Perfect for when you're in the deepest corners of the shop."
+                "text": "Yes! ZikFash is built offline-first. All your customer measurements and order records are saved locally inside your phone's memory. You can take sizes, review past orders, and manage clients deep inside market stalls even with zero network or mobile data."
               }
             },
             {
               "@type": "Question",
-              "name": "Who is ZikFash designed for?",
+              "name": "Do I need to download a heavy app from Google Play Store or App Store?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "ZikFash is the ultimate digital measurement book and AI assistant designed specifically for tailors and fashion designers who want to upgrade their craft."
+                "text": "No heavy app download is needed. ZikFash is a lightweight Progressive Web App (PWA) running directly in your phone browser. Simply visit the link and tap 'Add to Home Screen' or 'Install'. It launches instantly like a native app without consuming your phone's storage."
               }
             },
             {
               "@type": "Question",
-              "name": "Why is ZikFash better than a paper book?",
+              "name": "How does ZikFash scan old handwritten measurement books?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Paper books get torn, lost, or ruined by water, and handwritten numbers get misread. ZikFash keeps all your customer sizes clean and safe on your phone without internet."
+                "text": "You do not need to type customer sizes manually one by one. Using ZikFash's Old Notebook Scanner, snap a clear photo of your paper ledger page. AI handwriting recognition automatically extracts names, phone numbers, and body measurements into digital profiles in seconds."
               }
             },
             {
               "@type": "Question",
-              "name": "How does showing fabric on styles help me?",
+              "name": "How does showing fabric previews prevent customer arguments?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "By showing customers how their fabric looks on the style before cutting, you stop all arguments and complaints before you touch a pair of scissors."
+                "text": "ZikFash lets tailors preview how a client's selected fabric pattern looks draped on garments (such as Agbada, Senator, Kaftan, or dresses) before cutting. Showing this visualization to the customer helps agree on the outcome upfront and eliminates costly disputes after scissors touch fabric."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How do I measure international clients in the UK, US, or Canada without a physical tape?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Use ZikFash AI Remote Scan. Your diaspora customer takes two standing photos against a wall and uploads them. ZikFash estimates their anatomical measurements accurately so you don't have to rely on guesswork or inaccurate client measurements."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What happens if my phone gets lost, stolen, or damaged?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Your customer records are safe. When connected to the internet, ZikFash syncs securely with encrypted cloud backup. Whenever you sign in on a new phone or laptop, all your customer profiles, orders, and body measurements restore immediately."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is customer measurement data secure and compliant in Nigeria?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. ZikFash is owned and operated by ZikFash Technology Limited (RC - 9755589, Festac Town, Lagos) and is fully compliant with the Nigeria Data Protection Act (NDPA 2023) and NDPR as a certified Data Controller and Data Processor. All customer contact details and measurements are encrypted and never sold to third parties."
               }
             }
           ]
