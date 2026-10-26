@@ -1,45 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://zikfash.com/</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://zikfash.com/digital-measurement-book.html</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://zikfash.com/offline-tailoring-app.html</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://zikfash.com/ai-measurement-book-scanner.html</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://zikfash.com/fabric-preview-for-tailors.html</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://zikfash.com/how-to-install.html</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://zikfash.com/privacy.html</loc>
-    <lastmod>2026-10-23</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-</urlset>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Static Landing & Platform Marketing Pages -->
+  <sitemap>
+    <loc>https://zikfash.com/sitemap-pages.xml</loc>
+    <lastmod>2026-10-27</lastmod>
+  </sitemap>
+
+  <!-- Dynamic Tailor Showrooms, Boutiques & Bespoke Styles (Cloudflare Edge Worker) -->
+  <sitemap>
+    <loc>https://zikfash.com/portfolio/sitemap.xml</loc>
+    <lastmod>2026-10-27</lastmod>
+  </sitemap>
+</sitemapindex>
