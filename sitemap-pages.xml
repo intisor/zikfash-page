@@ -7,13 +7,19 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://zikfash.com/paper-vs-whatsapp-vs-zikfash.html</loc>
+    <loc>https://zikfash.com/tools/measurement-chart-template.html</loc>
     <lastmod>2026-11-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
     <loc>https://zikfash.com/tools/yardage-calculator.html</loc>
+    <lastmod>2026-11-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://zikfash.com/paper-vs-whatsapp-vs-zikfash.html</loc>
     <lastmod>2026-11-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
